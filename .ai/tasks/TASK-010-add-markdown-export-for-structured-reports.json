@@ -1,0 +1,83 @@
+{
+  "id": "TASK-010-add-markdown-export-for-structured-reports",
+  "title": "Add Markdown export for structured Product Signal Reports",
+  "type": "implementation",
+  "status": "completed",
+  "topology": "single-repo",
+  "objective": "Let the UI copy a deterministic Markdown export for structured Product Signal Reports while preserving verdict-style fallback behavior for compatibility jobs.",
+  "scope": {
+    "include": [
+      "Add a pure report Markdown formatter.",
+      "Add a clipboard helper for browser copy behavior.",
+      "Show Copy Markdown only for structured report jobs.",
+      "Show short success and failure copy feedback.",
+      "Add focused formatter and UI tests.",
+      "Update README and AI delivery state."
+    ],
+    "exclude": [
+      "API repo changes.",
+      "Extension repo changes.",
+      "File download export.",
+      "Markdown export for verdict-only fallback jobs.",
+      "Feedback submission or routing."
+    ]
+  },
+  "context": {
+    "must_read": [
+      ".ai/index.json",
+      ".ai/AI_CONTRACT.md",
+      ".ai/STATE.md",
+      ".ai/state/STATE.md",
+      ".ai/state/snapshot.json",
+      ".ai/contracts/insight-report.contract.md",
+      ".ai/slices/SLICE-009-add-markdown-export-for-structured-reports.md",
+      "src/App.tsx",
+      "src/api/noiseCutApi.ts"
+    ],
+    "optional_read": [
+      "README.md",
+      "src/styles.css"
+    ]
+  },
+  "allowed_files": [
+    "src/**",
+    "README.md",
+    ".ai/slices/SLICE-009-add-markdown-export-for-structured-reports.md",
+    ".ai/tasks/TASK-010-add-markdown-export-for-structured-reports.json",
+    ".ai/verification/verification-010-add-markdown-export-for-structured-reports.md",
+    ".ai/STATE.md",
+    ".ai/state/STATE.md",
+    ".ai/state/snapshot.json",
+    ".ai/state/events.jsonl"
+  ],
+  "forbidden_files": [
+    "package.json",
+    "package-lock.json",
+    "../noise-cut-api/**",
+    "../noise-cut-extension/**",
+    "C:\\Dev\\NoiseCut\\noise-cut-api\\**",
+    "C:\\Dev\\NoiseCut\\noise-cut-extension\\**"
+  ],
+  "validation": {
+    "commands": [
+      "npm run build",
+      "npm test -- --run",
+      "powershell -NoProfile -ExecutionPolicy Bypass -File C:\\Dev\\ai-delivery-kit\\scripts\\validate-ai-docs.ps1 . -Topology SingleRepo",
+      "powershell -NoProfile -ExecutionPolicy Bypass -File C:\\Dev\\ai-delivery-kit\\scripts\\check-ai-guardrails.ps1 . -TaskPath .\\.ai\\tasks\\TASK-010-add-markdown-export-for-structured-reports.json -Strict"
+    ]
+  },
+  "budget": {
+    "max_files_to_read": 12,
+    "max_files_to_edit": 8,
+    "max_context_tokens": 16000
+  },
+  "done": [
+    "Structured report jobs show a Copy Markdown action.",
+    "Verdict-only fallback jobs do not show Markdown export.",
+    "Markdown is assembled in the UI from job.report with deterministic formatting.",
+    "Copy success and failure states are shown in the UI.",
+    "No API or extension repo files were changed.",
+    "npm run build and npm test -- --run pass.",
+    "AI delivery state and verification records were updated."
+  ]
+}

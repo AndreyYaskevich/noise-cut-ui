@@ -1,0 +1,45 @@
+{
+  "id": "TASK-000",
+  "title": "TBD",
+  "type": "implementation",
+  "status": "proposed",
+  "topology": "single-repo",
+  "objective": "TBD",
+  "scope": {
+    "include": ["TBD"],
+    "exclude": ["TBD"]
+  },
+  "context": {
+    "must_read": [
+      ".ai/index.json",
+      ".ai/AI_CONTRACT.md",
+      ".ai/state/STATE.md",
+      ".ai/state/snapshot.json"
+    ],
+    "optional_read": [
+      ".ai/summaries/codebase.summary.md"
+    ]
+  },
+  "allowed_files": [
+    "TBD"
+  ],
+  "forbidden_files": [],
+  "validation": {
+    "commands": [
+      "TBD"
+    ]
+  },
+  "budget": {
+    "max_files_to_read": 12,
+    "max_files_to_edit": 5,
+    "max_context_tokens": 12000
+  },
+  "done": [
+    "Implementation stays inside scope.include.",
+    "No files in forbidden_files were changed.",
+    "Validation commands were run or skipped with a documented reason.",
+    "An event was appended to .ai/state/events.jsonl.",
+    ".ai/state/snapshot.json was updated.",
+    ".ai/state/STATE.md was updated."
+  ]
+}

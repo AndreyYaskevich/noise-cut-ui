@@ -1,0 +1,78 @@
+{
+  "id": "TASK-012-plan-url-only-report-generation",
+  "title": "Plan URL-only report generation",
+  "type": "planning",
+  "status": "planned",
+  "topology": "single-repo",
+  "objective": "Create the next cross-repo, UI-primary planning unit for additive URL-only Product Signal Report generation with API-first delivery and a future guarded UI mode toggle.",
+  "scope": {
+    "include": [
+      "Document the current UI requirement for pasted evidence.",
+      "Document the current API requirement for non-empty items[] in POST /api/analysis-jobs.",
+      "Define the additive API-first contract direction for supported URL-only flows.",
+      "Define the future UI mode toggle and fallback manual-evidence behavior.",
+      "Preserve backward compatibility for current API and extension clients.",
+      "Update AI delivery state and planning records."
+    ],
+    "exclude": [
+      "Runtime implementation in noise-cut-ui.",
+      "Runtime implementation in noise-cut-api.",
+      "Extension repo changes.",
+      "Markdown export, feedback, or routing changes.",
+      "Inventing a new endpoint without checked-in evidence."
+    ]
+  },
+  "context": {
+    "must_read": [
+      ".ai/index.json",
+      ".ai/AI_CONTRACT.md",
+      ".ai/STATE.md",
+      ".ai/state/STATE.md",
+      ".ai/state/snapshot.json",
+      ".ai/contracts/insight-report.contract.md",
+      ".ai/slices/SLICE-011-plan-url-only-report-generation.md",
+      "src/App.tsx",
+      "src/api/noiseCutApi.ts"
+    ],
+    "optional_read": [
+      "README.md"
+    ]
+  },
+  "allowed_files": [
+    ".ai/slices/SLICE-011-plan-url-only-report-generation.md",
+    ".ai/tasks/TASK-012-plan-url-only-report-generation.json",
+    ".ai/verification/verification-012-plan-url-only-report-generation.md",
+    ".ai/STATE.md",
+    ".ai/state/STATE.md",
+    ".ai/state/snapshot.json",
+    ".ai/state/events.jsonl"
+  ],
+  "forbidden_files": [
+    "src/**",
+    "README.md",
+    "package.json",
+    "package-lock.json",
+    "../noise-cut-api/**",
+    "../noise-cut-extension/**",
+    "C:\\Dev\\NoiseCut\\noise-cut-api\\**",
+    "C:\\Dev\\NoiseCut\\noise-cut-extension\\**"
+  ],
+  "validation": {
+    "commands": [
+      "powershell -NoProfile -ExecutionPolicy Bypass -File C:\\Dev\\ai-delivery-kit\\scripts\\validate-ai-docs.ps1 . -Topology SingleRepo",
+      "powershell -NoProfile -ExecutionPolicy Bypass -File C:\\Dev\\ai-delivery-kit\\scripts\\check-ai-guardrails.ps1 . -TaskPath .\\.ai\\tasks\\TASK-012-plan-url-only-report-generation.json -Strict"
+    ]
+  },
+  "budget": {
+    "max_files_to_read": 12,
+    "max_files_to_edit": 7,
+    "max_context_tokens": 14000
+  },
+  "done": [
+    "The current UI and API constraints are documented as hard blockers for true URL-only submission.",
+    "The additive API-first contract direction is defined without inventing a new endpoint.",
+    "The future UI mode toggle behavior is decision-complete.",
+    "Backward compatibility for the extension and existing analysis-job clients is preserved.",
+    "AI delivery state and planning records are updated."
+  ]
+}

@@ -1,0 +1,80 @@
+{
+  "id": "TASK-007-plan-product-signal-report-result-projection",
+  "title": "Plan Product Signal Report result projection",
+  "type": "planning",
+  "status": "completed",
+  "topology": "single-repo",
+  "objective": "Define the boundary for a future API-owned Product Signal Report projection so the UI can later render full Founder report sections without inventing data or changing sibling repos.",
+  "scope": {
+    "include": [
+      "Document the gap between the current verdict-style API result and the target Product Signal Report.",
+      "Define the preferred additive API-owned report projection boundary.",
+      "Define the future optional UI wrapper shape around job result responses.",
+      "Preserve existing API and extension compatibility rules.",
+      "Update AI delivery state and verification records."
+    ],
+    "exclude": [
+      "Runtime React or TypeScript implementation.",
+      "API endpoint, DTO, prompt, migration, or telemetry implementation.",
+      "Extension code or behavior changes.",
+      "Markdown copy.",
+      "Feedback submission.",
+      "Saved reports, auth, billing, routing, or deployment."
+    ]
+  },
+  "context": {
+    "must_read": [
+      ".ai/index.json",
+      ".ai/AI_CONTRACT.md",
+      ".ai/STATE.md",
+      ".ai/state/STATE.md",
+      ".ai/state/snapshot.json",
+      ".ai/contracts/insight-report.contract.md",
+      ".ai/phases/PHASE-002-product-signal-report-api-contract.md",
+      ".ai/slices/SLICE-006-submit-founder-report-request.md",
+      ".ai/tasks/TASK-006-submit-founder-report-request.json"
+    ],
+    "optional_read": [
+      ".ai/slices/SLICE-002-define-founder-report-contract-and-api-integration.md",
+      "README.md"
+    ]
+  },
+  "allowed_files": [
+    ".ai/slices/SLICE-007-plan-product-signal-report-result-projection.md",
+    ".ai/tasks/TASK-007-plan-product-signal-report-result-projection.json",
+    ".ai/verification/verification-007-product-signal-report-result-projection.md",
+    ".ai/STATE.md",
+    ".ai/state/STATE.md",
+    ".ai/state/snapshot.json",
+    ".ai/state/events.jsonl"
+  ],
+  "forbidden_files": [
+    "src/**",
+    "package.json",
+    "package-lock.json",
+    "../noise-cut-api/**",
+    "../noise-cut-extension/**",
+    "C:\\Dev\\NoiseCut\\noise-cut-api\\**",
+    "C:\\Dev\\NoiseCut\\noise-cut-extension\\**"
+  ],
+  "validation": {
+    "commands": [
+      "powershell -NoProfile -ExecutionPolicy Bypass -File C:\\Dev\\ai-delivery-kit\\scripts\\validate-ai-docs.ps1 . -Topology SingleRepo",
+      "powershell -NoProfile -ExecutionPolicy Bypass -File C:\\Dev\\ai-delivery-kit\\scripts\\check-ai-guardrails.ps1 . -TaskPath .\\.ai\\tasks\\TASK-007-plan-product-signal-report-result-projection.json -Strict"
+    ]
+  },
+  "budget": {
+    "max_files_to_read": 10,
+    "max_files_to_edit": 7,
+    "max_context_tokens": 12000
+  },
+  "done": [
+    "The projection boundary is documented.",
+    "The current verdict-result gap is explicit.",
+    "The future optional report wrapper shape is defined.",
+    "Existing API and extension compatibility rules are preserved.",
+    "No runtime source files or sibling repos were changed.",
+    "AI delivery state and verification records were updated."
+  ]
+}
+

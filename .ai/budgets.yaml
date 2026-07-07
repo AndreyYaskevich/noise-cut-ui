@@ -1,0 +1,19 @@
+version: 2.0
+defaults:
+  max_files_to_read: 12
+  max_files_to_edit: 5
+  max_context_tokens: 12000
+  max_generated_context_tokens: 10000
+task_types:
+  planning:
+    max_files_to_read: 10
+    max_files_to_edit: 4
+    max_context_tokens: 10000
+  implementation:
+    max_files_to_read: 14
+    max_files_to_edit: 6
+    max_context_tokens: 14000
+  review:
+    max_files_to_read: 20
+    max_files_to_edit: 0
+    max_context_tokens: 16000

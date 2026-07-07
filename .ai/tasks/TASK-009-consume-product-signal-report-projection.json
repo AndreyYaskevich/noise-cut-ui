@@ -1,0 +1,81 @@
+{
+  "id": "TASK-009-consume-product-signal-report-projection",
+  "title": "Consume Product Signal Report projection in the UI",
+  "type": "implementation",
+  "status": "completed",
+  "topology": "single-repo",
+  "objective": "Teach the UI to prefer the additive API-owned Product Signal Report projection while preserving the existing verdict-style fallback for older completed jobs.",
+  "scope": {
+    "include": [
+      "Add UI types for Product Signal Report job responses.",
+      "Render structured report sections from job.report.",
+      "Keep job.result rendering as a compatibility fallback.",
+      "Add focused tests for report-first and result-fallback behavior.",
+      "Update README and AI delivery state."
+    ],
+    "exclude": [
+      "API repo changes.",
+      "Extension repo changes.",
+      "Markdown copy.",
+      "Feedback submission.",
+      "Saved reports or routing."
+    ]
+  },
+  "context": {
+    "must_read": [
+      ".ai/index.json",
+      ".ai/AI_CONTRACT.md",
+      ".ai/STATE.md",
+      ".ai/state/STATE.md",
+      ".ai/state/snapshot.json",
+      ".ai/contracts/insight-report.contract.md",
+      ".ai/slices/SLICE-008-consume-product-signal-report-projection.md",
+      "src/api/noiseCutApi.ts",
+      "src/App.tsx"
+    ],
+    "optional_read": [
+      ".ai/slices/SLICE-007-plan-product-signal-report-result-projection.md",
+      "README.md"
+    ]
+  },
+  "allowed_files": [
+    "src/**",
+    "README.md",
+    ".ai/slices/SLICE-008-consume-product-signal-report-projection.md",
+    ".ai/tasks/TASK-009-consume-product-signal-report-projection.json",
+    ".ai/verification/verification-009-consume-product-signal-report-projection.md",
+    ".ai/STATE.md",
+    ".ai/state/STATE.md",
+    ".ai/state/snapshot.json",
+    ".ai/state/events.jsonl"
+  ],
+  "forbidden_files": [
+    "package.json",
+    "package-lock.json",
+    "../noise-cut-api/**",
+    "../noise-cut-extension/**",
+    "C:\\Dev\\NoiseCut\\noise-cut-api\\**",
+    "C:\\Dev\\NoiseCut\\noise-cut-extension\\**"
+  ],
+  "validation": {
+    "commands": [
+      "npm run build",
+      "npm test -- --run",
+      "powershell -NoProfile -ExecutionPolicy Bypass -File C:\\Dev\\ai-delivery-kit\\scripts\\validate-ai-docs.ps1 . -Topology SingleRepo",
+      "powershell -NoProfile -ExecutionPolicy Bypass -File C:\\Dev\\ai-delivery-kit\\scripts\\check-ai-guardrails.ps1 . -TaskPath .\\.ai\\tasks\\TASK-009-consume-product-signal-report-projection.json -Strict"
+    ]
+  },
+  "budget": {
+    "max_files_to_read": 12,
+    "max_files_to_edit": 8,
+    "max_context_tokens": 14000
+  },
+  "done": [
+    "UI API types include nullable report projection fields.",
+    "UI renders the structured report when present.",
+    "UI falls back to the existing verdict-style result when report is missing.",
+    "No API or extension repo files were changed.",
+    "npm run build and npm test -- --run pass.",
+    "AI delivery state and verification records were updated."
+  ]
+}

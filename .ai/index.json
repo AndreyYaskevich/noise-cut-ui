@@ -1,0 +1,144 @@
+{
+  "version": "2.0",
+  "project": {
+    "name": "NoiseCut UI",
+    "type": "react-typescript-web-app",
+    "description": "Separate web app repository for turning Reddit threads and YouTube comments into product insight reports.",
+    "topology": "single-repo"
+  },
+  "documents": [
+    {
+      "id": "ai_contract",
+      "path": ".ai/AI_CONTRACT.md",
+      "kind": "contract",
+      "read_when": ["always"],
+      "always_read": true,
+      "max_tokens": 1200
+    },
+    {
+      "id": "state_human",
+      "path": ".ai/state/STATE.md",
+      "kind": "state",
+      "read_when": ["always"],
+      "always_read": true,
+      "max_tokens": 1200
+    },
+    {
+      "id": "state_snapshot",
+      "path": ".ai/state/snapshot.json",
+      "kind": "state",
+      "read_when": ["always"],
+      "always_read": true,
+      "max_tokens": 1000
+    },
+    {
+      "id": "context_index",
+      "path": ".ai/CONTEXT_INDEX.md",
+      "kind": "context-guide",
+      "read_when": ["planning", "context-selection"],
+      "always_read": false,
+      "max_tokens": 1200
+    },
+    {
+      "id": "codebase_summary",
+      "path": ".ai/summaries/codebase.summary.md",
+      "kind": "summary",
+      "read_when": ["source-inspection", "implementation", "review"],
+      "always_read": false,
+      "max_tokens": 1500
+    },
+    {
+      "id": "noisecut_api_agents",
+      "path": "../noise-cut-api/AGENTS.md",
+      "kind": "external-repo-instructions",
+      "read_when": ["api-integration", "report-generation", "cross-repo"],
+      "always_read": false,
+      "max_tokens": 1200
+    },
+    {
+      "id": "noisecut_api_state",
+      "path": "../noise-cut-api/.ai/STATE.md",
+      "kind": "external-repo-state",
+      "read_when": ["api-integration", "report-generation", "cross-repo"],
+      "always_read": false,
+      "max_tokens": 1800
+    },
+    {
+      "id": "noisecut_extension_agents",
+      "path": "../noise-cut-extension/AGENTS.md",
+      "kind": "external-repo-instructions",
+      "read_when": ["extension-handoff", "cross-repo"],
+      "always_read": false,
+      "max_tokens": 1000
+    }
+  ],
+  "areas": [
+    {
+      "id": "product-planning",
+      "name": "Product planning",
+      "source_roots": [".ai/briefs", ".ai/phases", ".ai/slices", ".ai/tasks"],
+      "read_when": ["product-change", "planning", "delivery-setup"],
+      "contracts": [],
+      "summaries": ["codebase_summary"],
+      "dependencies": []
+    },
+    {
+      "id": "api-integration",
+      "name": "Existing NoiseCut API dependency",
+      "source_roots": ["../noise-cut-api"],
+      "read_when": ["api-integration", "report-generation", "privacy", "telemetry"],
+      "contracts": [],
+      "summaries": ["codebase_summary"],
+      "dependencies": []
+    },
+    {
+      "id": "extension-handoff",
+      "name": "Existing NoiseCut extension dependency",
+      "source_roots": ["../noise-cut-extension"],
+      "read_when": ["extension-handoff", "cross-repo"],
+      "contracts": [],
+      "summaries": ["codebase_summary"],
+      "dependencies": []
+    }
+  ],
+  "contracts": [
+    {
+      "id": "api_openapi",
+      "path": ".ai/contracts/api.openapi.json",
+      "kind": "openapi"
+    },
+    {
+      "id": "database_schema",
+      "path": ".ai/contracts/database.schema.json",
+      "kind": "database-schema"
+    },
+    {
+      "id": "events_schema",
+      "path": ".ai/contracts/events.schema.json",
+      "kind": "event-schema"
+    },
+    {
+      "id": "config_schema",
+      "path": ".ai/contracts/config.schema.json",
+      "kind": "config-schema"
+    }
+  ],
+  "summaries": [
+    {
+      "id": "codebase_summary",
+      "path": ".ai/summaries/codebase.summary.md",
+      "source_path": ".",
+      "hash": "not-computed",
+      "area": "repo",
+      "last_verified": "2026-07-05",
+      "status": "fresh"
+    }
+  ],
+  "dependencies": [
+    {
+      "id": "runtime_dependencies",
+      "path": ".ai/codemap/dependencies.json",
+      "kind": "dependency-map"
+    }
+  ]
+}

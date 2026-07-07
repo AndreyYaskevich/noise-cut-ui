@@ -1,0 +1,97 @@
+{
+  "version": "2.0",
+  "project": {
+    "name": "NoiseCut UI",
+    "type": "react-typescript-web-app"
+  },
+  "current": {
+    "objective": "Complete the Reddit-first URL-only report flow while keeping YouTube on pasted evidence only for v0.",
+    "phase": "Phase 002: Product Signal Report API Contract",
+    "slice": "Slice 011: Plan URL-Only Report Generation",
+    "task_id": "url-only-mode-ux-fallback-and-guidance"
+  },
+  "completed_tasks": [
+    "TASK-001-initialize-noisecut-ui-ai-context",
+    "TASK-002-define-founder-report-contract-and-api-integration",
+    "TASK-003-choose-vite-react-typescript-app-scaffold",
+    "TASK-004-scaffold-vite-react-typescript-app",
+    "TASK-005-add-api-readiness-and-metadata-client",
+    "TASK-006-submit-founder-report-request",
+    "TASK-007-plan-product-signal-report-result-projection",
+    "TASK-009-consume-product-signal-report-projection",
+    "TASK-010-add-markdown-export-for-structured-reports",
+    "TASK-011-add-report-feedback-submission",
+    "url-only-submission-mode-with-api-capability-metadata"
+  ],
+  "last_verified_commit": "unknown",
+  "decisions": [
+    "noise-cut-ui/.ai is canonical for committed work in this repository.",
+    "The existing NoiseCut API remains the source of truth for report generation and public contracts.",
+    "The existing extension remains supported and should evolve into a capture/handoff tool.",
+    "Founder lens is the v0 priority for the Product Signal Report UI contract.",
+    "Use Vite + React + TypeScript with npm for the NoiseCut Web App scaffold.",
+    "The initial UI integration checks existing API readiness and metadata before report-generation work.",
+    "The UI submits Founder-lens report requests through existing POST /api/analysis-jobs and polls GET /api/analysis-jobs/{jobId}.",
+    "The full Product Signal Report sections should come from an additive API-owned report projection, not a UI-only transformation of verdict results.",
+    "The UI prefers the additive report projection and falls back to the existing verdict-style result field.",
+    "Markdown export is assembled in the UI from structured job.report data and is available only for report-backed jobs.",
+    "Report feedback goes through the existing API feedback endpoint and avoids sending raw discussion excerpts by default.",
+    "The UI supports both pasted-evidence and URL-only submission modes.",
+    "URL-only mode eligibility is driven by additive API metadata capabilities rather than hardcoded source rules.",
+    "v0 keeps YouTube in scope only through pasted evidence, and any YouTube URL-only expansion requires an explicit follow-up task."
+  ],
+  "constraints": [
+    "Runtime app scaffold exists with Vite, React, TypeScript, npm, Vitest, and React Testing Library.",
+    "Pasted-evidence mode still blocks report submission when no evidence items are supplied.",
+    "URL-only mode currently depends on API metadata advertising support and is enabled for Reddit only.",
+    "The UI must preserve YouTube pasted-evidence submission and must not advertise YouTube URL-only unless the API metadata contract explicitly changes.",
+    "Do not modify sibling API or extension repos from this repo unless a later task explicitly coordinates cross-repo work.",
+    "Do not invent route names, billing, auth, or API behavior that is not backed by checked-in files.",
+    "Founder lens is the v0 priority.",
+    "Raw page/comment content must not be logged or stored by default."
+  ],
+  "forbidden_changes": [
+    "Do not change public contracts unless the active slice explicitly requires it.",
+    "Do not introduce dependencies unless the active slice explicitly allows them.",
+    "Do not modify C:\\Dev\\NoiseCut\\noise-cut-api or C:\\Dev\\NoiseCut\\noise-cut-extension from this repo without an explicit cross-repo task."
+  ],
+  "validation_commands": [
+    "powershell -NoProfile -ExecutionPolicy Bypass -File C:\\Dev\\ai-delivery-kit\\scripts\\validate-ai-docs.ps1 . -Topology SingleRepo",
+    "powershell -NoProfile -ExecutionPolicy Bypass -File C:\\Dev\\ai-delivery-kit\\scripts\\check-ai-guardrails.ps1 . -TaskPath .\\.ai\\tasks\\TASK-012-plan-url-only-report-generation.json -Strict"
+  ],
+  "open_questions": [
+    "What safe error contract should the API return for extraction-failed Reddit URL-only requests?",
+    "Will the v0 app need React Router, or can it remain a single-view tool?",
+    "What evidence threshold should justify a future YouTube URL-only expansion task?"
+  ],
+  "known_risks": [
+    "API contract work may overreach if it is not kept additive and tied to existing backend patterns.",
+    "Extension compatibility could be broken later if handoff work is not regression-checked explicitly.",
+    "The UI contract may need a wrapper if the API returns report data inside a job result envelope.",
+    "The report contract can drift from backend DTOs if implemented before an API coordination task.",
+    "The UI now depends on CORS and availability of the existing API for live readiness display.",
+    "The current feedback UI is intentionally narrow and may need richer affordances later.",
+    "Markdown export remains unavailable for verdict-only fallback jobs.",
+    "UI/API capability metadata can drift if later API changes are not reflected in the UI contract tests.",
+    "YouTube URL-only could accidentally expand scope unless it is revisited only after clear demand, a stable extraction source, and acceptance in API and extension repo instructions."
+  ],
+  "last_task_summary": {
+    "date": "2026-07-07",
+    "actor": "Codex",
+    "task_id": "reddit-first-url-only-completion-alignment",
+    "summary": "Added persistent submission-mode guidance and automatically switched back to pasted evidence when URL-only no longer matched the current source capability.",
+    "files_changed": [
+      "src/App.tsx",
+      "src/App.test.tsx",
+      ".ai/STATE.md",
+      ".ai/state/STATE.md",
+      ".ai/state/snapshot.json",
+      ".ai/state/events.jsonl"
+    ],
+    "validation": "npm run build and npm test -- --run.",
+    "remaining_risks": [
+      "The UI depends on the API metadata capability contract remaining accurate.",
+      "Future platform expansion still needs an explicit follow-up task."
+    ]
+  }
+}

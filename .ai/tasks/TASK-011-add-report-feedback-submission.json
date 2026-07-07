@@ -1,0 +1,82 @@
+{
+  "id": "TASK-011-add-report-feedback-submission",
+  "title": "Add report feedback submission",
+  "type": "implementation",
+  "status": "completed",
+  "topology": "single-repo",
+  "objective": "Let the UI submit lightweight feedback about generated reports through the existing NoiseCut API without changing the report-generation or extension compatibility flow.",
+  "scope": {
+    "include": [
+      "Add typed UI client support for the existing feedback endpoint.",
+      "Add a small feedback interaction to the report result area.",
+      "Submit feedback tied to the current job context when available.",
+      "Keep feedback payloads privacy-safe.",
+      "Add focused API-client and UI tests.",
+      "Update README and AI delivery state after implementation."
+    ],
+    "exclude": [
+      "API repo changes.",
+      "Extension repo changes.",
+      "Auth or invite-code flows.",
+      "Saved history or dashboards.",
+      "Broad visual redesign."
+    ]
+  },
+  "context": {
+    "must_read": [
+      ".ai/index.json",
+      ".ai/AI_CONTRACT.md",
+      ".ai/STATE.md",
+      ".ai/state/STATE.md",
+      ".ai/state/snapshot.json",
+      ".ai/contracts/insight-report.contract.md",
+      ".ai/slices/SLICE-010-add-report-feedback-submission.md",
+      "src/App.tsx",
+      "src/api/noiseCutApi.ts"
+    ],
+    "optional_read": [
+      "README.md",
+      "src/styles.css"
+    ]
+  },
+  "allowed_files": [
+    "src/**",
+    "README.md",
+    ".ai/slices/SLICE-010-add-report-feedback-submission.md",
+    ".ai/tasks/TASK-011-add-report-feedback-submission.json",
+    ".ai/verification/verification-011-add-report-feedback-submission.md",
+    ".ai/STATE.md",
+    ".ai/state/STATE.md",
+    ".ai/state/snapshot.json",
+    ".ai/state/events.jsonl"
+  ],
+  "forbidden_files": [
+    "package.json",
+    "package-lock.json",
+    "../noise-cut-api/**",
+    "../noise-cut-extension/**",
+    "C:\\Dev\\NoiseCut\\noise-cut-api\\**",
+    "C:\\Dev\\NoiseCut\\noise-cut-extension\\**"
+  ],
+  "validation": {
+    "commands": [
+      "npm run build",
+      "npm test -- --run",
+      "powershell -NoProfile -ExecutionPolicy Bypass -File C:\\Dev\\ai-delivery-kit\\scripts\\validate-ai-docs.ps1 . -Topology SingleRepo",
+      "powershell -NoProfile -ExecutionPolicy Bypass -File C:\\Dev\\ai-delivery-kit\\scripts\\check-ai-guardrails.ps1 . -TaskPath .\\.ai\\tasks\\TASK-011-add-report-feedback-submission.json -Strict"
+    ]
+  },
+  "budget": {
+    "max_files_to_read": 12,
+    "max_files_to_edit": 8,
+    "max_context_tokens": 16000
+  },
+  "done": [
+    "The UI can submit lightweight feedback through the existing feedback endpoint.",
+    "Feedback is attached to the current job context when available.",
+    "Raw pasted discussion content is not sent in feedback payloads by default.",
+    "No API or extension repo files are changed.",
+    "npm run build and npm test -- --run pass.",
+    "AI delivery state and verification records were updated."
+  ]
+}

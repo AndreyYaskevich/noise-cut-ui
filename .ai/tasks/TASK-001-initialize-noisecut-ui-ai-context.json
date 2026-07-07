@@ -1,0 +1,95 @@
+{
+  "id": "TASK-001-initialize-noisecut-ui-ai-context",
+  "title": "Initialize NoiseCut UI repo-local AI context for Web App v0",
+  "type": "documentation",
+  "status": "completed",
+  "objective": "Replace the generic AI Delivery Kit starter placeholders with NoiseCut UI-specific repo-local planning, state, and first workflow artifacts without creating runtime application code.",
+  "scope": {
+    "include": [
+      "Update AGENTS.md and CLAUDE.md for NoiseCut UI-specific repo rules.",
+      "Replace placeholder AI contract, state, context, roadmap, and decisions files with NoiseCut UI facts.",
+      "Create one real brief, phase, slice, task packet, and verification record for Web App v0 planning.",
+      "Align advanced state, summary, codemap, and index files with current repo reality.",
+      "Keep all changes inside repo-local AI context files."
+    ],
+    "exclude": [
+      "Runtime React application code changes.",
+      "Dependency changes.",
+      "API repository changes.",
+      "Extension repository changes."
+    ]
+  },
+  "context": {
+    "must_read": [
+      "AGENTS.md",
+      ".ai/index.json",
+      ".ai/AI_CONTRACT.md",
+      ".ai/STATE.md",
+      ".ai/CONTEXT_INDEX.md",
+      ".ai/state/STATE.md",
+      ".ai/state/snapshot.json",
+      ".ai/briefs/BRIEF-noisecut-ui-v0-product-signal-web-app.md",
+      ".ai/phases/PHASE-001-noisecut-ui-ai-context-and-v0-planning.md",
+      ".ai/slices/SLICE-001-align-ai-delivery-kit-and-define-web-app-v0.md"
+    ],
+    "optional_read": [
+      ".ai/ROADMAP.md",
+      ".ai/DECISIONS.md",
+      ".ai/summaries/codebase.summary.md"
+    ]
+  },
+  "allowed_files": [
+    "AGENTS.md",
+    "CLAUDE.md",
+    ".ai/AI_CONTRACT.md",
+    ".ai/STATE.md",
+    ".ai/CONTEXT_INDEX.md",
+    ".ai/ROADMAP.md",
+    ".ai/DECISIONS.md",
+    ".ai/index.json",
+    ".ai/state/**",
+    ".ai/summaries/**",
+    ".ai/codemap/**",
+    ".ai/briefs/**",
+    ".ai/phases/**",
+    ".ai/slices/**",
+    ".ai/tasks/**",
+    ".ai/STATE.md",
+    ".ai/verification/**"
+  ],
+  "forbidden_files": [
+    "../NoiseCut/noise-cut-api/**",
+    "../NoiseCut/noise-cut-extension/**",
+    "src/**",
+    "app/**",
+    "package.json",
+    "package-lock.json",
+    "pnpm-lock.yaml",
+    "yarn.lock"
+  ],
+  "validation": {
+    "commands": [
+      "powershell -NoProfile -ExecutionPolicy Bypass -File C:\\Dev\\ai-delivery-kit\\scripts\\validate-ai-docs.ps1 C:\\Dev\\noise-cut-ui -Topology SingleRepo",
+      "powershell -NoProfile -ExecutionPolicy Bypass -File C:\\Dev\\ai-delivery-kit\\scripts\\validate-ai-docs.ps1 C:\\Dev\\noise-cut-ui -Strict",
+      "powershell -NoProfile -ExecutionPolicy Bypass -File C:\\Dev\\ai-delivery-kit\\scripts\\check-ai-guardrails.ps1 C:\\Dev\\noise-cut-ui -Strict"
+    ]
+  },
+  "budget": {
+    "max_files_to_read": 20,
+    "max_files_to_edit": 8,
+    "max_context_tokens": 18000
+  },
+  "unknowns": [
+    "Exact React + TypeScript scaffold choice is not decided yet.",
+    "Exact additive API route name for Product Signal Reports is not decided yet.",
+    "Exact extension handoff token/persistence shape is not decided yet."
+  ],
+  "done": [
+    "NoiseCut UI core AI contract/state/context files contain real project facts.",
+    "The first real brief, phase, slice, task packet, and verification record exist.",
+    "Advanced state and summary artifacts reflect current repo reality.",
+    "Work stayed inside repo-local AI context scope.",
+    ".ai/STATE.md was updated.",
+    "If advanced state is used, .ai/state/* was updated."
+  ]
+}

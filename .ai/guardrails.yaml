@@ -1,0 +1,16 @@
+version: 2.0
+required_files:
+  - AGENTS.md
+  - .ai/index.json
+  - .ai/AI_CONTRACT.md
+  - .ai/state/STATE.md
+  - .ai/state/events.jsonl
+  - .ai/state/snapshot.json
+forbidden_patterns:
+  - "**/.env"
+  - "**/.env.*"
+  - "**/secrets.*"
+  - "**/node_modules/**"
+state_update_required: true
+allow_dependency_changes_without_task_permission: false
+require_validation_report: true

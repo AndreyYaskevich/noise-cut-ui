@@ -1,0 +1,103 @@
+{
+  "id": "TASK-003-choose-vite-react-typescript-app-scaffold",
+  "title": "Record Vite React TypeScript npm scaffold decision",
+  "type": "planning",
+  "status": "completed",
+  "topology": "single-repo",
+  "objective": "Record the app scaffold decision for NoiseCut UI as Vite + React + TypeScript with npm, browser-safe API environment names, and implementation boundaries without creating runtime application files.",
+  "scope": {
+    "include": [
+      "Create or update a durable planning artifact that records Vite + React + TypeScript as the selected scaffold.",
+      "Record npm as the package manager.",
+      "Record future env var names VITE_NOISECUT_API_BASE_URL and VITE_NOISECUT_API_TIMEOUT_MS.",
+      "Record future source root, test stack, and no-router default for v0.",
+      "Keep the work planning-only and ready for a later scaffold implementation task."
+    ],
+    "exclude": [
+      "Running npm create vite or any scaffold generator.",
+      "Creating package.json, package-lock.json, Vite config, TypeScript config, src files, tests, or runtime source files.",
+      "Installing dependencies.",
+      "Implementing React components, routing, API clients, or styles.",
+      "Changing C:\\Dev\\NoiseCut\\noise-cut-api.",
+      "Changing C:\\Dev\\NoiseCut\\noise-cut-extension.",
+      "Choosing auth, billing, deployment, or backend-for-frontend behavior."
+    ]
+  },
+  "context": {
+    "must_read": [
+      ".ai/index.json",
+      ".ai/AI_CONTRACT.md",
+      ".ai/STATE.md",
+      ".ai/state/STATE.md",
+      ".ai/state/snapshot.json",
+      ".ai/CONTEXT_INDEX.md",
+      ".ai/briefs/BRIEF-noisecut-ui-v0-product-signal-web-app.md",
+      ".ai/contracts/insight-report.contract.md",
+      ".ai/slices/SLICE-003-choose-vite-react-typescript-app-scaffold.md"
+    ],
+    "optional_read": [
+      ".ai/ROADMAP.md",
+      ".ai/DECISIONS.md",
+      ".ai/summaries/codebase.summary.md"
+    ]
+  },
+  "allowed_files": [
+    ".ai/tasks/TASK-003-choose-vite-react-typescript-app-scaffold.json",
+    ".ai/slices/SLICE-003-choose-vite-react-typescript-app-scaffold.md",
+    ".ai/adr/ADR-001-vite-react-typescript-app-scaffold.md",
+    ".ai/DECISIONS.md",
+    ".ai/verification/verification-003-vite-react-typescript-scaffold-decision.md",
+    ".ai/STATE.md",
+    ".ai/state/STATE.md",
+    ".ai/state/snapshot.json",
+    ".ai/state/events.jsonl"
+  ],
+  "forbidden_files": [
+    "src/**",
+    "app/**",
+    "components/**",
+    "pages/**",
+    "routes/**",
+    "public/**",
+    "index.html",
+    "package.json",
+    "package-lock.json",
+    "pnpm-lock.yaml",
+    "yarn.lock",
+    "tsconfig.json",
+    "tsconfig.*.json",
+    "vite.config.*",
+    "vitest.config.*",
+    "next.config.*",
+    "../noise-cut-api/**",
+    "../noise-cut-extension/**",
+    "C:\\Dev\\NoiseCut\\noise-cut-api\\**",
+    "C:\\Dev\\NoiseCut\\noise-cut-extension\\**"
+  ],
+  "validation": {
+    "commands": [
+      "powershell -NoProfile -ExecutionPolicy Bypass -File C:\\Dev\\ai-delivery-kit\\scripts\\validate-ai-docs.ps1 . -Topology SingleRepo",
+      "powershell -NoProfile -ExecutionPolicy Bypass -File C:\\Dev\\ai-delivery-kit\\scripts\\check-ai-guardrails.ps1 . -TaskPath .\\.ai\\tasks\\TASK-003-choose-vite-react-typescript-app-scaffold.json -Strict"
+    ]
+  },
+  "budget": {
+    "max_files_to_read": 10,
+    "max_files_to_edit": 5,
+    "max_context_tokens": 10000
+  },
+  "unknowns": [
+    "Whether a future slice will need React Router after initial v0 flows are designed.",
+    "Whether deployment platform conventions require different public environment variable names.",
+    "Whether the scaffold implementation task should use Vite's generator or create files manually."
+  ],
+  "done": [
+    "A durable planning artifact records Vite + React + TypeScript with npm as the selected scaffold.",
+    "The artifact records VITE_NOISECUT_API_BASE_URL and VITE_NOISECUT_API_TIMEOUT_MS as future browser-safe config names.",
+    "The artifact records src/ as the future source root and Vitest plus React Testing Library as the expected test stack.",
+    "No runtime app files, package files, API repo files, or extension repo files were changed.",
+    "Validation commands were run or skipped with a documented reason.",
+    ".ai/STATE.md was updated with task outcome and remaining risks.",
+    "If advanced state is in scope, .ai/state/STATE.md, .ai/state/snapshot.json, and .ai/state/events.jsonl were updated.",
+    "Verification evidence was recorded in .ai/verification/verification-003-vite-react-typescript-scaffold-decision.md."
+  ]
+}

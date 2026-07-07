@@ -1,0 +1,91 @@
+{
+  "id": "TASK-004-scaffold-vite-react-typescript-app",
+  "title": "Scaffold Vite React TypeScript app with npm",
+  "type": "implementation",
+  "status": "completed",
+  "topology": "single-repo",
+  "objective": "Create the initial Vite + React + TypeScript runtime scaffold for NoiseCut UI using npm, without implementing API integration, extension handoff, auth, billing, or routing.",
+  "scope": {
+    "include": [
+      "Create npm package metadata and package-lock.",
+      "Create Vite, React, TypeScript, and Vitest configuration.",
+      "Create index.html and src/ app entry files.",
+      "Create a minimal accessible NoiseCut v0 app shell.",
+      "Create .env.example for VITE_NOISECUT_API_BASE_URL and VITE_NOISECUT_API_TIMEOUT_MS.",
+      "Update README with local scaffold commands.",
+      "Update AI delivery state and verification records."
+    ],
+    "exclude": [
+      "Real API calls.",
+      "Report generation, report viewer, feedback submission, or Markdown copy implementation.",
+      "React Router or multi-page routing.",
+      "Auth, billing, persistence, telemetry exporters, or deployment setup.",
+      "Changes to C:\\Dev\\NoiseCut\\noise-cut-api.",
+      "Changes to C:\\Dev\\NoiseCut\\noise-cut-extension."
+    ]
+  },
+  "context": {
+    "must_read": [
+      ".ai/index.json",
+      ".ai/AI_CONTRACT.md",
+      ".ai/STATE.md",
+      ".ai/state/STATE.md",
+      ".ai/state/snapshot.json",
+      ".ai/CONTEXT_INDEX.md",
+      ".ai/adr/ADR-001-vite-react-typescript-app-scaffold.md",
+      ".ai/contracts/insight-report.contract.md",
+      ".ai/slices/SLICE-004-scaffold-vite-react-typescript-app.md"
+    ],
+    "optional_read": [
+      ".ai/ROADMAP.md",
+      ".ai/DECISIONS.md"
+    ]
+  },
+  "allowed_files": [
+    "package.json",
+    "package-lock.json",
+    "index.html",
+    "src/**",
+    "tsconfig.json",
+    "tsconfig.app.json",
+    "tsconfig.node.json",
+    "vite.config.ts",
+    ".env.example",
+    ".gitignore",
+    "README.md",
+    ".ai/slices/SLICE-004-scaffold-vite-react-typescript-app.md",
+    ".ai/tasks/TASK-004-scaffold-vite-react-typescript-app.json",
+    ".ai/verification/verification-004-vite-react-typescript-scaffold.md",
+    ".ai/STATE.md",
+    ".ai/state/STATE.md",
+    ".ai/state/snapshot.json",
+    ".ai/state/events.jsonl"
+  ],
+  "forbidden_files": [
+    "../noise-cut-api/**",
+    "../noise-cut-extension/**",
+    "C:\\Dev\\NoiseCut\\noise-cut-api\\**",
+    "C:\\Dev\\NoiseCut\\noise-cut-extension\\**"
+  ],
+  "validation": {
+    "commands": [
+      "npm install",
+      "npm run build",
+      "npm test -- --run",
+      "powershell -NoProfile -ExecutionPolicy Bypass -File C:\\Dev\\ai-delivery-kit\\scripts\\validate-ai-docs.ps1 . -Topology SingleRepo",
+      "powershell -NoProfile -ExecutionPolicy Bypass -File C:\\Dev\\ai-delivery-kit\\scripts\\check-ai-guardrails.ps1 . -TaskPath .\\.ai\\tasks\\TASK-004-scaffold-vite-react-typescript-app.json -Strict"
+    ]
+  },
+  "budget": {
+    "max_files_to_read": 12,
+    "max_files_to_edit": 20,
+    "max_context_tokens": 14000
+  },
+  "done": [
+    "Initial Vite React TypeScript app scaffold exists.",
+    "npm install, npm run build, and npm test -- --run pass.",
+    "No sibling repo files were changed.",
+    "No real API calls or extension handoff behavior were implemented.",
+    "AI delivery state and verification records were updated."
+  ]
+}

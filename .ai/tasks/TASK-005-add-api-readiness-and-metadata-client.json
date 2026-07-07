@@ -1,0 +1,81 @@
+{
+  "id": "TASK-005-add-api-readiness-and-metadata-client",
+  "title": "Add API readiness and metadata client skeleton",
+  "type": "implementation",
+  "status": "completed",
+  "topology": "single-repo",
+  "objective": "Connect the Vite UI scaffold to the existing NoiseCut API readiness and metadata endpoints without implementing report generation or modifying sibling repos.",
+  "scope": {
+    "include": [
+      "Add UI API client functions for GET /ready and GET /api/meta.",
+      "Use VITE_NOISECUT_API_BASE_URL and VITE_NOISECUT_API_TIMEOUT_MS.",
+      "Render API connection and capability status in the app shell.",
+      "Add tests for API client and UI behavior.",
+      "Update AI delivery state and verification records."
+    ],
+    "exclude": [
+      "POST /api/analysis-jobs or report generation.",
+      "GET /api/analysis-jobs/{jobId} polling.",
+      "Feedback submission.",
+      "Markdown copy.",
+      "Extension handoff.",
+      "Changes to C:\\Dev\\NoiseCut\\noise-cut-api.",
+      "Changes to C:\\Dev\\NoiseCut\\noise-cut-extension."
+    ]
+  },
+  "context": {
+    "must_read": [
+      ".ai/index.json",
+      ".ai/AI_CONTRACT.md",
+      ".ai/STATE.md",
+      ".ai/state/STATE.md",
+      ".ai/state/snapshot.json",
+      ".ai/CONTEXT_INDEX.md",
+      ".ai/contracts/insight-report.contract.md",
+      ".ai/slices/SLICE-005-add-api-readiness-and-metadata-client.md"
+    ],
+    "optional_read": [
+      ".ai/adr/ADR-001-vite-react-typescript-app-scaffold.md",
+      ".ai/DECISIONS.md"
+    ]
+  },
+  "allowed_files": [
+    "src/**",
+    "README.md",
+    ".ai/slices/SLICE-005-add-api-readiness-and-metadata-client.md",
+    ".ai/tasks/TASK-005-add-api-readiness-and-metadata-client.json",
+    ".ai/verification/verification-005-api-readiness-and-metadata-client.md",
+    ".ai/STATE.md",
+    ".ai/state/STATE.md",
+    ".ai/state/snapshot.json",
+    ".ai/state/events.jsonl"
+  ],
+  "forbidden_files": [
+    "package.json",
+    "package-lock.json",
+    "../noise-cut-api/**",
+    "../noise-cut-extension/**",
+    "C:\\Dev\\NoiseCut\\noise-cut-api\\**",
+    "C:\\Dev\\NoiseCut\\noise-cut-extension\\**"
+  ],
+  "validation": {
+    "commands": [
+      "npm run build",
+      "npm test -- --run",
+      "powershell -NoProfile -ExecutionPolicy Bypass -File C:\\Dev\\ai-delivery-kit\\scripts\\validate-ai-docs.ps1 . -Topology SingleRepo",
+      "powershell -NoProfile -ExecutionPolicy Bypass -File C:\\Dev\\ai-delivery-kit\\scripts\\check-ai-guardrails.ps1 . -TaskPath .\\.ai\\tasks\\TASK-005-add-api-readiness-and-metadata-client.json -Strict"
+    ]
+  },
+  "budget": {
+    "max_files_to_read": 12,
+    "max_files_to_edit": 12,
+    "max_context_tokens": 14000
+  },
+  "done": [
+    "API client reads /ready and /api/meta only.",
+    "UI displays API connection and capability status.",
+    "No report generation, feedback, extension handoff, or sibling repo changes were made.",
+    "npm run build and npm test -- --run pass.",
+    "AI delivery state and verification records were updated."
+  ]
+}
