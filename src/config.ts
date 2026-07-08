@@ -1,5 +1,6 @@
 export const FORM_DEFAULTS = {
-  lens: "founder"
+  reportLanguage: "pl" as const,
+  researchIntent: "sourcing"
 } as const
 
 export const API_CONFIG = {

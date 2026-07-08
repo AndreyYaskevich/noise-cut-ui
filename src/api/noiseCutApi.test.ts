@@ -1,5 +1,5 @@
-import { afterEach, describe, expect, it, vi } from "vitest"
-import { checkApiConnection, createAnalysisJob, getAnalysisJob, submitFeedback } from "./noiseCutApi"
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
+import { checkApiConnection, createAllegroReport, getReport, listReports, requestBetaAccess, retryReport, setApiLanguage, submitFeedback, verifyBetaAccess } from "./noiseCutApi"
 
 const healthyReadiness = {
   status: "healthy",
@@ -10,22 +10,29 @@ const metadata = {
   apiVersion: "v1",
   contractVersion: "v1",
   minimumSupportedContractVersion: "v1",
-  supportedSourceTypes: ["reddit", "youtube", "generic"],
-  supportedAnalysisTypes: ["GeneralVerdict", "ProductVerdict"],
+  supportedSourceTypes: ["reddit", "youtube", "generic", "allegro", "manual"],
+  supportedAnalysisTypes: ["GeneralVerdict", "ProductVerdict", "AllegroProductRiskReport"],
   capabilities: {
     urlOnly: {
       supported: true,
       supportedSourceTypes: ["reddit"]
+    },
+    betaAccess: {
+      enabled: false
     }
   }
 }
 
 describe("noiseCutApi", () => {
+  beforeEach(() => {
+    setApiLanguage("pl")
+  })
+
   afterEach(() => {
     vi.restoreAllMocks()
   })
 
-  it("returns ready when readiness and metadata support the v0 UI", async () => {
+  it("returns ready when readiness and metadata support Allegro reports", async () => {
     vi.stubGlobal(
       "fetch",
       vi.fn()
@@ -39,31 +46,27 @@ describe("noiseCutApi", () => {
     })
   })
 
-  it("returns unready when the API reports unhealthy dependencies", async () => {
+  it("returns unready when Allegro report support is missing", async () => {
     vi.stubGlobal(
       "fetch",
-      vi.fn().mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({ status: "unhealthy", dependencies: [{ name: "postgres", status: "unhealthy" }] })
-      })
+      vi.fn()
+        .mockResolvedValueOnce({ ok: true, json: async () => healthyReadiness })
+        .mockResolvedValueOnce({
+          ok: true,
+          json: async () => ({
+            ...metadata,
+            supportedAnalysisTypes: ["ProductVerdict"]
+          })
+        })
     )
 
     await expect(checkApiConnection()).resolves.toMatchObject({
       state: "unready",
-      message: "API dependencies are not ready."
+      message: "API nie reklamuje raportow Allegro."
     })
   })
 
-  it("returns error when the API cannot be reached", async () => {
-    vi.stubGlobal("fetch", vi.fn().mockRejectedValueOnce(new Error("Network error")))
-
-    await expect(checkApiConnection()).resolves.toMatchObject({
-      state: "error",
-      message: "Network error"
-    })
-  })
-
-  it("creates an analysis job through the existing API contract", async () => {
+  it("creates an Allegro report through the report endpoint", async () => {
     const fetchMock = vi.fn().mockResolvedValueOnce({
       ok: true,
       json: async () => ({
@@ -78,65 +81,173 @@ describe("noiseCutApi", () => {
     vi.stubGlobal("fetch", fetchMock)
 
     await expect(
-      createAnalysisJob({
-        sourceType: "reddit",
-        url: "https://www.reddit.com/r/example/comments/123/example/",
-        items: [{ id: "item-1", text: "I need this to be easier to compare." }],
-        analysisType: "ProductVerdict",
-        metadata: { lens: "founder" }
+      createAllegroReport({
+        keyword: "odkurzacz pionowy",
+        listingUrls: ["https://allegro.pl/oferta/test"],
+        pastedEvidence: "Kupujacy narzekaja na slaba baterie.",
+        researchIntent: "sourcing",
+        reportLanguage: "pl"
       })
     ).resolves.toMatchObject({ jobId: "job-123", status: "Pending" })
 
     expect(fetchMock).toHaveBeenCalledWith(
-      expect.stringContaining("/api/analysis-jobs"),
+      expect.stringContaining("/api/reports"),
       expect.objectContaining({
         method: "POST",
-        body: expect.stringContaining("\"analysisType\":\"ProductVerdict\"")
+        body: expect.stringContaining("\"keyword\":\"odkurzacz pionowy\"")
       })
     )
   })
 
-  it("reads analysis job status by job id", async () => {
+  it("creates an Allegro report with beta headers when credentials are provided", async () => {
     const fetchMock = vi.fn().mockResolvedValueOnce({
       ok: true,
       json: async () => ({
         jobId: "job-123",
-        status: "Completed",
+        status: "Pending",
         contentHash: "hash-123",
-        report: {
-          summary: "Founder summary",
-          painPoints: [],
-          featureRequests: [],
-          complaints: [],
-          objections: [],
-          competitorMentions: [],
-          demandSignals: [],
-          userLanguage: [],
-          contentIdeas: [],
-          productOpportunities: [],
-          limitations: [],
-          metadata: {
-            sourceType: "reddit",
-            lens: "founder",
-            jobId: "job-123",
-            contentHash: "hash-123",
-            analysisType: "ProductVerdict",
-            generatedAt: "2026-07-05T12:00:00Z",
-            projectionVersion: "product-signal-report-v0"
-          }
-        },
+        report: null,
         result: null,
         error: null
       })
     })
     vi.stubGlobal("fetch", fetchMock)
 
-    await expect(getAnalysisJob("job-123")).resolves.toMatchObject({
-      status: "Completed",
-      report: { summary: "Founder summary" }
+    await createAllegroReport(
+      {
+        keyword: "odkurzacz pionowy",
+        pastedEvidence: "Kupujacy narzekaja na slaba baterie.",
+        reportLanguage: "pl"
+      },
+      {
+        email: "seller@example.com",
+        accessCode: "secret-code"
+      }
+    )
+
+    expect(fetchMock).toHaveBeenCalledWith(
+      expect.stringContaining("/api/reports"),
+      expect.objectContaining({
+        headers: expect.objectContaining({
+          "X-NoiseCut-Beta-Email": "seller@example.com",
+          "X-NoiseCut-Beta-Access-Code": "secret-code"
+        })
+      })
+    )
+  })
+
+  it("requests and verifies beta access", async () => {
+    const fetchMock = vi
+      .fn()
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({
+          email: "seller@example.com",
+          status: "pending_payment",
+          plan: "beta",
+          reportLimit: 5,
+          reportsUsed: 0,
+          reportsRemaining: 5
+        })
+      })
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({
+          email: "seller@example.com",
+          status: "active",
+          plan: "beta",
+          reportLimit: 5,
+          reportsUsed: 1,
+          reportsRemaining: 4
+        })
+      })
+    vi.stubGlobal("fetch", fetchMock)
+
+    await expect(requestBetaAccess("seller@example.com")).resolves.toMatchObject({ status: "pending_payment" })
+    await expect(verifyBetaAccess({ email: "seller@example.com", accessCode: "secret-code" })).resolves.toMatchObject({
+      status: "active",
+      reportsRemaining: 4
     })
 
-    expect(fetchMock).toHaveBeenCalledWith(expect.stringContaining("/api/analysis-jobs/job-123"), expect.any(Object))
+    expect(fetchMock).toHaveBeenNthCalledWith(
+      1,
+      expect.stringContaining("/api/beta/access/request"),
+      expect.objectContaining({ method: "POST" })
+    )
+    expect(fetchMock).toHaveBeenNthCalledWith(
+      2,
+      expect.stringContaining("/api/beta/access/verify"),
+      expect.objectContaining({ method: "POST" })
+    )
+  })
+
+  it("reads a report by job id", async () => {
+    const fetchMock = vi.fn().mockResolvedValueOnce({
+      ok: true,
+      json: async () => ({
+        jobId: "job-123",
+        status: "Completed",
+        contentHash: "hash-123",
+        report: { summary: "Raport", complaints: [], metadata: { keyword: "fotel", jobId: "job-123" } },
+        result: null,
+        error: null
+      })
+    })
+    vi.stubGlobal("fetch", fetchMock)
+
+    await expect(getReport("job-123")).resolves.toMatchObject({
+      status: "Completed",
+      report: { summary: "Raport" }
+    })
+
+    expect(fetchMock).toHaveBeenCalledWith(expect.stringContaining("/api/reports/job-123"), expect.any(Object))
+  })
+
+  it("retries a failed report with beta headers when credentials are provided", async () => {
+    const fetchMock = vi.fn().mockResolvedValueOnce({
+      ok: true,
+      json: async () => ({
+        jobId: "job-123",
+        status: "Pending",
+        contentHash: "hash-123",
+        report: null,
+        result: null,
+        error: null
+      })
+    })
+    vi.stubGlobal("fetch", fetchMock)
+
+    await expect(retryReport("job-123", { email: "seller@example.com", accessCode: "secret-code" })).resolves.toMatchObject({
+      jobId: "job-123",
+      status: "Pending"
+    })
+
+    expect(fetchMock).toHaveBeenCalledWith(
+      expect.stringContaining("/api/reports/job-123/retry"),
+      expect.objectContaining({
+        method: "POST",
+        headers: expect.objectContaining({
+          "X-NoiseCut-Beta-Email": "seller@example.com",
+          "X-NoiseCut-Beta-Access-Code": "secret-code"
+        })
+      })
+    )
+  })
+
+  it("lists report history", async () => {
+    const fetchMock = vi.fn().mockResolvedValueOnce({
+      ok: true,
+      json: async () => ({
+        items: [{ jobId: "job-123", status: "Completed", keyword: "fotel", contentHash: "hash", createdAt: "2026-07-07T10:00:00Z" }]
+      })
+    })
+    vi.stubGlobal("fetch", fetchMock)
+
+    await expect(listReports()).resolves.toMatchObject({
+      items: [{ keyword: "fotel" }]
+    })
+
+    expect(fetchMock).toHaveBeenCalledWith(expect.stringContaining("/api/reports"), expect.any(Object))
   })
 
   it("submits feedback through the existing feedback endpoint", async () => {
@@ -154,12 +265,12 @@ describe("noiseCutApi", () => {
       submitFeedback({
         jobId: "job-123",
         contentHash: "hash-123",
-        sourceType: "reddit",
-        sourceUrl: "https://www.reddit.com/r/example/comments/123/example/",
+        sourceType: "allegro",
+        sourceUrl: "https://allegro.pl/oferta/test",
         feedbackKind: "useful",
         mode: "insight",
         metadata: {
-          lens: "founder",
+          lens: "allegro-seller",
           uiSurface: "noise-cut-ui"
         },
         createdAt: "2026-07-06T12:00:00Z"
@@ -170,7 +281,7 @@ describe("noiseCutApi", () => {
       expect.stringContaining("/api/feedback"),
       expect.objectContaining({
         method: "POST",
-        body: expect.stringContaining("\"feedbackKind\":\"useful\"")
+        body: expect.stringContaining("\"sourceType\":\"allegro\"")
       })
     )
   })
