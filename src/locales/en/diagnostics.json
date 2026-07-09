@@ -1,0 +1,8 @@
+{
+  "supportDiagnostics": "Support diagnostics",
+  "supportData": "Support data",
+  "supportDescription": "Safe information for report diagnosis. It does not include pasted evidence.",
+  "copyDiagnostics": "Copy diagnostics",
+  "copying": "Copying...",
+  "diagnosticsCopied": "Diagnostics copied."
+}

@@ -1,0 +1,80 @@
+{
+  "id": "TASK-014-consolidate-duplicated-translation-dictionaries",
+  "title": "Consolidate the 4 duplicated translation dictionaries",
+  "type": "implementation",
+  "status": "proposed",
+  "topology": "single-repo",
+  "objective": "Replace getReportLabels, markdownText, and the duplicate getKnownErrorMessage with lookups against the Slice 012 namespaces, diff-reviewing wording before merging, and delete the unused reportSections array.",
+  "scope": {
+    "include": [
+      "Diff all four existing dictionaries key by key before merging.",
+      "Replace duplicated lookups with calls into the shared namespaces.",
+      "Delete the unused reportSections dead-code array."
+    ],
+    "exclude": [
+      "Any final rendered wording change beyond documented discrepancy resolution.",
+      "Extracting new hardcoded strings not already in one of the four dictionaries.",
+      "API error translation layer, formatting, switcher, pluralization, or test migration work."
+    ]
+  },
+  "context": {
+    "must_read": [
+      ".ai/AI_CONTRACT.md",
+      ".ai/STATE.md",
+      ".ai/slices/SLICE-013-consolidate-duplicated-translation-dictionaries.md",
+      "src/App.tsx",
+      "src/reportMarkdown.ts",
+      "src/api/noiseCutApi.ts"
+    ],
+    "optional_read": [
+      "src/App.test.tsx",
+      "src/reportMarkdown.test.ts"
+    ]
+  },
+  "allowed_files": [
+    "src/App.tsx",
+    "src/reportMarkdown.ts",
+    "src/api/noiseCutApi.ts",
+    "src/locales/en/common.json",
+    "src/locales/en/forms.json",
+    "src/locales/en/errors.json",
+    "src/locales/en/report.json",
+    "src/locales/en/diagnostics.json",
+    "src/locales/pl/common.json",
+    "src/locales/pl/forms.json",
+    "src/locales/pl/errors.json",
+    "src/locales/pl/report.json",
+    "src/locales/pl/diagnostics.json",
+    ".ai/slices/SLICE-013-consolidate-duplicated-translation-dictionaries.md",
+    ".ai/tasks/TASK-014-consolidate-duplicated-translation-dictionaries.json",
+    ".ai/verification/verification-013-consolidate-duplicated-translation-dictionaries.md",
+    ".ai/STATE.md",
+    ".ai/state/STATE.md",
+    ".ai/state/snapshot.json",
+    ".ai/state/events.jsonl"
+  ],
+  "forbidden_files": [
+    "../noise-cut-api/**",
+    "../noise-cut-extension/**",
+    "C:\\Dev\\NoiseCut\\noise-cut-api\\**",
+    "C:\\Dev\\NoiseCut\\noise-cut-extension\\**",
+    ".env*"
+  ],
+  "validation": {
+    "commands": [
+      "npm test -- --run",
+      "npm run build"
+    ]
+  },
+  "budget": {
+    "max_files_to_read": 12,
+    "max_files_to_edit": 13,
+    "max_context_tokens": 16000
+  },
+  "done": [
+    "getReportLabels, markdownText, and the duplicate getKnownErrorMessage are removed in favor of shared namespaces.",
+    "reportSections dead code is deleted.",
+    "Existing content assertions still pass or discrepancies are documented in verification.",
+    "AI delivery state is updated."
+  ]
+}

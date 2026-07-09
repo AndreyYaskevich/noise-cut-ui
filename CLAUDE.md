@@ -23,9 +23,10 @@ Task rules:
 - Do not add dependencies unless the active scope explicitly allows them.
 - Do not change public contracts unless the active scope explicitly requires it.
 - Do not modify the sibling API or extension repos from this repo unless the active task explicitly coordinates cross-repo work.
-- Do not store or log raw page/comment content by default.
+- Do not store or log raw page/comment/evidence content by default.
+- The actual v0.1 product is the Allegro seller Product Risk & Opportunity Report workspace (see `C:\Dev\NoiseCut\noise-cut-api\docs\noisecut-v0.1-product.md`), not the earlier Reddit/YouTube "Founder lens" narrative — treat that narrative as superseded.
 - Update `.ai/STATE.md` after every completed task.
 - When this project uses advanced v2 state, also update `.ai/state/snapshot.json`, `.ai/state/STATE.md`, and `.ai/state/events.jsonl`.
 - Report changed files, validation commands, validation results, and remaining risks.
 
-Detailed workflows live in `.ai` files. The current state is planning-only: runtime app files do not exist yet, so treat repo-local AI artifacts and sibling repo references as the factual starting point.
+Detailed workflows live in `.ai` files. A runtime app scaffold exists (Vite, React, TypeScript, npm, Vitest, React Testing Library — see `package.json`, `src/`); read actual source files for package, routing, and source-layout facts instead of assuming.

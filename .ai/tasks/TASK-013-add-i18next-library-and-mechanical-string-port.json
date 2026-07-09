@@ -1,0 +1,87 @@
+{
+  "id": "TASK-013-add-i18next-library-and-mechanical-string-port",
+  "title": "Add i18next library and mechanically port existing strings",
+  "type": "implementation",
+  "status": "completed",
+  "topology": "single-repo",
+  "objective": "Add react-i18next/i18next, wire an I18nextProvider, and mechanically port strings.en/strings.pl from src/i18n.ts into namespaced JSON files with zero visible behavior change.",
+  "scope": {
+    "include": [
+      "Add i18next, react-i18next, i18next-browser-languagedetector to package.json, pinned to explicit versions.",
+      "Create src/locales/{en,pl}/{common,forms,errors,report,diagnostics}.json ported verbatim from strings.en/pl.",
+      "Create src/i18nSetup.ts and wire I18nextProvider in src/main.tsx.",
+      "Keep src/i18n.ts as a thin re-export shim so existing call sites keep compiling unchanged."
+    ],
+    "exclude": [
+      "Any component rendered-output change.",
+      "Removing or rewriting getReportLabels, markdownText, or getKnownErrorMessage.",
+      "Extracting new hardcoded strings or aria-labels.",
+      "Error-translation layer, formatting, switcher rebuild, pluralization, or test migration work."
+    ]
+  },
+  "context": {
+    "must_read": [
+      ".ai/AI_CONTRACT.md",
+      ".ai/STATE.md",
+      ".ai/adr/ADR-003-adopt-react-i18next-for-ui-localization.md",
+      ".ai/slices/SLICE-012-add-i18next-library-and-mechanical-string-port.md",
+      "src/i18n.ts",
+      "src/main.tsx"
+    ],
+    "optional_read": [
+      "package.json"
+    ]
+  },
+  "allowed_files": [
+    "package.json",
+    "package-lock.json",
+    "src/locales/en/common.json",
+    "src/locales/en/forms.json",
+    "src/locales/en/errors.json",
+    "src/locales/en/report.json",
+    "src/locales/en/diagnostics.json",
+    "src/locales/pl/common.json",
+    "src/locales/pl/forms.json",
+    "src/locales/pl/errors.json",
+    "src/locales/pl/report.json",
+    "src/locales/pl/diagnostics.json",
+    "src/i18nSetup.ts",
+    "src/main.tsx",
+    "src/i18nSetup.test.ts",
+    ".ai/slices/SLICE-012-add-i18next-library-and-mechanical-string-port.md",
+    ".ai/tasks/TASK-013-add-i18next-library-and-mechanical-string-port.json",
+    ".ai/verification/verification-012-add-i18next-library-and-mechanical-string-port.md",
+    ".ai/STATE.md",
+    ".ai/state/STATE.md",
+    ".ai/state/snapshot.json",
+    ".ai/state/events.jsonl"
+  ],
+  "forbidden_files": [
+    "../noise-cut-api/**",
+    "../noise-cut-extension/**",
+    "C:\\Dev\\NoiseCut\\noise-cut-api\\**",
+    "C:\\Dev\\NoiseCut\\noise-cut-extension\\**",
+    ".env*",
+    "src/App.tsx",
+    "src/reportMarkdown.ts",
+    "src/api/noiseCutApi.ts"
+  ],
+  "validation": {
+    "commands": [
+      "npm run build",
+      "npm test -- --run"
+    ]
+  },
+  "budget": {
+    "max_files_to_read": 10,
+    "max_files_to_edit": 14,
+    "max_context_tokens": 14000
+  },
+  "done": [
+    "The app builds and runs with the new i18next provider wired in.",
+    "Both locale bundles cover the same key set as strings.en/pl.",
+    "App.test.tsx passes unchanged.",
+    "A smoke test confirms both namespaces load without missing keys.",
+    "AI delivery state is updated."
+  ]
+}

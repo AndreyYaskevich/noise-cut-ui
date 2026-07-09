@@ -8,23 +8,23 @@ NoiseCut UI
 
 ## Project Type
 
-React + TypeScript web app repository for NoiseCut's product insight experience.
+React + TypeScript + Vite web app for NoiseCut's Allegro seller Product Risk & Opportunity Report workspace.
 
 ## Current Objective
 
-Complete the Reddit-first URL-only report flow while keeping YouTube on pasted evidence only for v0.
+Formalize the existing hand-rolled en/pl localization (consolidate duplicated string dictionaries, adopt `react-i18next`, stop trusting backend-translated error text) without breaking the shipped Allegro MVP 0.1 or `noise-cut-extension`.
 
 ## Current Task
 
-url-only-submission-mode-with-api-capability-metadata
+consolidate-duplicated-translation-dictionaries (Slice 013)
 
 ## Current Phase
 
-Phase 002: Product Signal Report API Contract
+Phase 003: Localization Hardening
 
 ## Current Slice
 
-Slice 011: Plan URL-Only Report Generation
+Slice 013: Consolidate Duplicated Translation Dictionaries
 
 ## Completed Tasks
 
@@ -38,68 +38,65 @@ Slice 011: Plan URL-Only Report Generation
 - `TASK-009-consume-product-signal-report-projection`
 - `TASK-010-add-markdown-export-for-structured-reports`
 - `TASK-011-add-report-feedback-submission`
+- `allegro-mvp-0.1-direct-commit-bf6ac02` (retroactive, outside AI slice/task workflow)
+- `reconcile-ai-context-with-shipped-allegro-mvp`
+
+## Superseded Tasks
+
+- `TASK-012-plan-url-only-report-generation`
 
 ## Last Verified Commit
 
-Unknown
+`bf6ac02`
 
 ## Architecture Decisions
 
 - `noise-cut-ui/.ai` is canonical for committed work in this repository.
 - The existing NoiseCut API remains the source of truth for report generation and public contracts.
 - The existing extension remains supported and should evolve into a capture/handoff tool.
-- `C:\Dev\NoiseCut\.ai` is archived workspace background only.
-- Use Vite + React + TypeScript with npm for the NoiseCut Web App scaffold.
-- The UI currently checks the existing API via `GET /ready` and `GET /api/meta`.
-- The UI submits Founder-lens report requests through existing `POST /api/analysis-jobs` and polls `GET /api/analysis-jobs/{jobId}`.
-- The full Product Signal Report sections should come from an additive API-owned report projection, not a UI-only transformation of verdict results.
-- The UI now prefers the additive `report` projection and falls back to the existing verdict-style `result` field.
-- Markdown export is assembled in the UI from structured `job.report` data and is available only for report-backed jobs.
-- Report feedback goes through the existing API feedback endpoint and avoids sending raw discussion excerpts by default.
-- The UI now supports a guarded URL-only submission mode and reads eligibility from API metadata capabilities.
-- v0 keeps YouTube in scope only through pasted evidence, while YouTube URL-only stays out of scope until a dedicated platform-expansion task approves it.
+- **The actual v0.1 UI is the Allegro Product Risk & Opportunity Report workspace**, not the earlier Reddit/YouTube "Founder lens" narrative.
+- A runtime scaffold exists (Vite, React, TypeScript, npm, Vitest, RTL) — do not claim otherwise.
+- Adopt `react-i18next`/`i18next` to replace the hand-rolled `src/i18n.ts`, primarily for correct Polish pluralization and to consolidate four duplicated string dictionaries.
+- The UI stops preferring server-supplied `error.message`; it translates client-side from `error.code` (+ future `params`).
 
 ## Known Constraints
 
 - Runtime app scaffold exists with Vite, React, TypeScript, npm, Vitest, and React Testing Library.
-- Pasted-evidence mode still blocks report submission when no evidence items are supplied.
-- URL-only mode currently depends on API metadata advertising support and is enabled for Reddit only.
-- The UI must preserve YouTube pasted-evidence submission and must not advertise YouTube URL-only unless the API metadata contract explicitly changes.
 - Do not modify sibling API or extension repos from this repo unless a later task explicitly coordinates cross-repo work.
-- Do not invent route names, billing, auth, or source-layout details that are not backed by checked-in files.
-- Founder lens is the v0 priority.
-- Raw page/comment content must not be logged or stored by default.
+- Do not invent route names, billing, auth, or API behavior that is not backed by checked-in files.
+- Raw page/comment/evidence content must not be logged or stored by default.
+- Slice 015 (API error translation layer) is blocked on `noise-cut-api` Slice 010 shipping the additive `Params` field first.
 
 ## Forbidden Changes
 
 - Follow `.ai/guardrails.yaml` and the active task packet.
+- Do not modify `noise-cut-api` or `noise-cut-extension` from this repo.
 
 ## Validation Commands
 
 - `powershell -NoProfile -ExecutionPolicy Bypass -File C:\Dev\ai-delivery-kit\scripts\validate-ai-docs.ps1 . -Topology SingleRepo`
-- `powershell -NoProfile -ExecutionPolicy Bypass -File C:\Dev\ai-delivery-kit\scripts\check-ai-guardrails.ps1 . -TaskPath .\.ai\tasks\TASK-012-plan-url-only-report-generation.json -Strict`
+- `npm run build`
+- `npm test -- --run`
 
 ## Open Questions
 
-- What safe error contract should the API return for extraction-failed Reddit URL-only requests?
-- Will the v0 app need React Router, or can it remain a single-view tool?
-- What evidence threshold should justify a future YouTube URL-only expansion task?
+- Should `i18next`/`react-i18next` be pinned to explicit versions given `package.json` currently pins everything to `"latest"`?
+- Should the frontend read `SUPPORTED_LANGUAGES` from `GET /api/meta` at boot instead of hardcoding its own copy?
 
 ## Known Risks
 
-- Planning artifacts can drift from runtime reality if future scaffold changes are not written back into `.ai`.
-- API contract work may overreach if it is not kept additive and tied to existing backend patterns.
-- Extension compatibility could be broken later if handoff work is not regression-checked explicitly.
-- Markdown export remains unavailable for verdict-only fallback jobs.
-- UI/API capability metadata can drift if later API changes are not reflected in the UI contract tests.
-- YouTube URL-only could accidentally expand scope unless it is revisited only after clear demand, a stable extraction source, and acceptance in API and extension repo instructions.
+- The four existing duplicated string dictionaries have already drifted from each other.
+- Existing tests assert on exact literal translated strings; migration requires nontrivial rework.
+- Slice 015 is blocked on a cross-repo dependency (`noise-cut-api` Slice 010).
 
 ## Last Task Summary
 
-- Date: 2026-07-07
-- Actor: Codex
-- Task: url-only-mode-ux-fallback-and-guidance
-- Summary: Added persistent submission-mode guidance and automatically switched back to pasted evidence when URL-only no longer matched the current source capability.
-- Files changed: `src/App.tsx`, `src/App.test.tsx`, `.ai/STATE.md`, `.ai/state/STATE.md`, `.ai/state/snapshot.json`, `.ai/state/events.jsonl`.
-- Validation: `npm run build` and `npm test -- --run`.
-- Remaining risks: The UI depends on the API metadata capability contract remaining accurate, and future platform expansion still needs an explicit follow-up task.
+- Date: 2026-07-09
+- Actor: Claude
+- Task: add-i18next-library-and-mechanical-string-port (Slice 012)
+- Summary: Added i18next/react-i18next/i18next-browser-languagedetector (pinned versions), wired I18nextProvider, mechanically ported all i18n.ts keys into 5 namespace JSON files. Zero visible behavior change.
+- Files changed: `package.json`, `src/locales/{en,pl}/*.json`, `src/i18nSetup.ts`, `src/i18nSetup.test.ts`, `src/main.tsx`, `.ai/slices/SLICE-012-*.md`, `.ai/tasks/TASK-013-*.json`, `.ai/verification/verification-012-*.md`, `.ai/state/STATE.md`, `.ai/state/snapshot.json`, `.ai/state/events.jsonl`.
+- Validation: `npm run build` passed; `npm test -- --run` passed 39/39.
+- Remaining risks: consolidating the four duplicated string dictionaries (Slice 013) risks wording drift; Slice 015 remains cross-repo dependent on `noise-cut-api` Slice 010's `Params` field.
+
+Prior task (2026-07-08, reconcile-ai-context-with-shipped-allegro-mvp): corrected minimum and advanced AI state to describe the shipped Allegro MVP 0.1 UI instead of the stale Reddit/YouTube narrative and the false "no runtime scaffold" claim; opened Phase 003 (Localization Hardening) with Slices 012-019.

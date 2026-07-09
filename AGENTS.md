@@ -30,11 +30,11 @@ Task rules:
 - Do not add dependencies unless the active scope explicitly allows them.
 - Do not change public contracts unless the active scope explicitly requires it.
 - Do not modify `noise-cut-api` or `noise-cut-extension` from this repo unless the active task is an explicit cross-repo coordination task.
-- Keep the Founder lens as the v0 priority unless a later task explicitly expands scope.
+- The actual v0.1 product is the Allegro seller Product Risk & Opportunity Report workspace (see `C:\Dev\NoiseCut\noise-cut-api\docs\noisecut-v0.1-product.md`), not the earlier Reddit/YouTube "Founder lens" narrative — treat that narrative as superseded.
 - Prefer additive API integration such as a new report endpoint over breaking existing extension-facing flows.
-- Do not store or log raw page/comment content by default.
+- Do not store or log raw page/comment/evidence content by default.
 - Update `.ai/STATE.md` after every completed task.
 - When this project uses advanced v2 state, also update `.ai/state/snapshot.json`, `.ai/state/STATE.md`, and `.ai/state/events.jsonl`.
 - Report changed files, validation commands, validation results, and remaining risks.
 
-The current workflow starts with AI-context alignment and product-planning artifacts only. No runtime app scaffold exists yet, so tasks must not claim package, routing, or source-layout facts until those files exist.
+A runtime app scaffold exists (Vite, React, TypeScript, npm, Vitest, React Testing Library — see `package.json`, `src/`). Read actual source files for package, routing, and source-layout facts instead of assuming; do not rely on older `.ai` narrative that predates the scaffold.

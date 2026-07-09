@@ -1,0 +1,76 @@
+{
+  "id": "TASK-016-add-api-error-translation-layer",
+  "title": "Add API error translation layer",
+  "type": "implementation",
+  "status": "blocked",
+  "topology": "cross-repo-read-only",
+  "objective": "Build translateApiError(code, params) so the UI translates from error.code/params client-side instead of preferring server-supplied message, falling back to message only for unmapped codes.",
+  "scope": {
+    "include": [
+      "Add src/i18n/translateApiError.ts consuming the errors namespace with interpolation.",
+      "Update noiseCutApi.ts readErrorMessage to surface {code, params}.",
+      "Remove getKnownApiErrorMessage from App.tsx in favor of the shared helper.",
+      "Table-driven test over every known error code x both locales, plus one unmapped-code fallback test."
+    ],
+    "exclude": [
+      "Any change to the noise-cut-api contract or repo.",
+      "New error-handling UI beyond swapping the message source.",
+      "Formatting, switcher, pluralization, or test migration work."
+    ]
+  },
+  "context": {
+    "must_read": [
+      ".ai/AI_CONTRACT.md",
+      ".ai/STATE.md",
+      ".ai/adr/ADR-003-adopt-react-i18next-for-ui-localization.md",
+      ".ai/slices/SLICE-015-add-api-error-translation-layer.md",
+      "src/api/noiseCutApi.ts",
+      "C:\\Dev\\NoiseCut\\noise-cut-api\\.ai\\slices\\SLICE-010-add-structured-params-to-error-contract.md"
+    ],
+    "optional_read": [
+      "src/App.tsx"
+    ]
+  },
+  "allowed_files": [
+    "src/i18n/translateApiError.ts",
+    "src/i18n/translateApiError.test.ts",
+    "src/api/noiseCutApi.ts",
+    "src/api/noiseCutApi.test.ts",
+    "src/App.tsx",
+    "src/locales/en/errors.json",
+    "src/locales/pl/errors.json",
+    ".ai/slices/SLICE-015-add-api-error-translation-layer.md",
+    ".ai/tasks/TASK-016-add-api-error-translation-layer.json",
+    ".ai/verification/verification-015-add-api-error-translation-layer.md",
+    ".ai/STATE.md",
+    ".ai/state/STATE.md",
+    ".ai/state/snapshot.json",
+    ".ai/state/events.jsonl"
+  ],
+  "forbidden_files": [
+    "../noise-cut-api/**",
+    "C:\\Dev\\NoiseCut\\noise-cut-api\\**",
+    "../noise-cut-extension/**",
+    "C:\\Dev\\NoiseCut\\noise-cut-extension\\**",
+    ".env*"
+  ],
+  "validation": {
+    "commands": [
+      "npm test -- --run",
+      "npm run build"
+    ]
+  },
+  "budget": {
+    "max_files_to_read": 10,
+    "max_files_to_edit": 8,
+    "max_context_tokens": 14000
+  },
+  "done": [
+    "translateApiError exists and is used everywhere an API error is displayed.",
+    "Table-driven test covers every known error code x both locales.",
+    "Unmapped-code fallback test passes.",
+    "getKnownApiErrorMessage is removed.",
+    "AI delivery state is updated.",
+    "Confirmed noise-cut-api Slice 010 (ApiError.Params) has shipped before this task began implementation."
+  ]
+}

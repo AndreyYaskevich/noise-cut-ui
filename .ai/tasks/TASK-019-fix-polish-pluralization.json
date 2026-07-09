@@ -1,0 +1,63 @@
+{
+  "id": "TASK-019-fix-polish-pluralization",
+  "title": "Fix Polish pluralization",
+  "type": "implementation",
+  "status": "proposed",
+  "topology": "single-repo",
+  "objective": "Replace manual ternary-based pluralization with i18next count-based plural keys, correctly covering Polish's three plural forms.",
+  "scope": {
+    "include": [
+      "Identify every count-dependent string in App.tsx and the report namespace.",
+      "Convert each to i18next plural key suffixes and t(key, {count}) calls.",
+      "Parametrized test covering counts 1, 2, 5, 22 (Polish) and 1, 2 (English)."
+    ],
+    "exclude": [
+      "Non-plural string changes.",
+      "Language switcher or test-suite migration work."
+    ]
+  },
+  "context": {
+    "must_read": [
+      ".ai/AI_CONTRACT.md",
+      ".ai/STATE.md",
+      ".ai/slices/SLICE-018-fix-polish-pluralization.md",
+      "src/App.tsx"
+    ],
+    "optional_read": []
+  },
+  "allowed_files": [
+    "src/App.tsx",
+    "src/App.test.tsx",
+    "src/locales/en/report.json",
+    "src/locales/pl/report.json",
+    ".ai/slices/SLICE-018-fix-polish-pluralization.md",
+    ".ai/tasks/TASK-019-fix-polish-pluralization.json",
+    ".ai/verification/verification-018-fix-polish-pluralization.md",
+    ".ai/STATE.md",
+    ".ai/state/STATE.md",
+    ".ai/state/snapshot.json",
+    ".ai/state/events.jsonl"
+  ],
+  "forbidden_files": [
+    "../noise-cut-api/**",
+    "../noise-cut-extension/**",
+    "C:\\Dev\\NoiseCut\\noise-cut-api\\**",
+    "C:\\Dev\\NoiseCut\\noise-cut-extension\\**",
+    ".env*"
+  ],
+  "validation": {
+    "commands": [
+      "npm test -- --run"
+    ]
+  },
+  "budget": {
+    "max_files_to_read": 6,
+    "max_files_to_edit": 4,
+    "max_context_tokens": 8000
+  },
+  "done": [
+    "All count-dependent strings use i18next plural keys, not manual ternaries.",
+    "Parametrized test confirms correct plural form selection at counts 1, 2, 5, 22.",
+    "AI delivery state is updated."
+  ]
+}

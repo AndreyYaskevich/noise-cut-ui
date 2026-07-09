@@ -1,0 +1,21 @@
+{
+  "betaEmailRequired": "Podaj email beta.",
+  "betaCredentialsRequired": "Podaj email i kod dostepu beta.",
+  "betaDisabled": "Beta gate jest wylaczony w tym srodowisku. Raporty mozna generowac bez kodu dostepu.",
+  "betaAccessTitle": "Dostep do raportow",
+  "betaCodePlaceholder": "Kod wyslany po aktywacji",
+  "betaAccessPrompt": "Wpisz email i kod dostepu. Jesli nie masz kodu, popros o dostep beta.",
+  "betaPendingDetail": "Konto oczekuje na platnosc lub reczna aktywacje.",
+  "betaDisabledDetail": "Konto beta jest wylaczone.",
+  "betaNeedsActivation": "Dostep beta wymaga aktywacji.",
+  "activeAccess": "Aktywny dostep. Pozostalo raportow: {{remaining}}.",
+  "limitUsed": "Dostep aktywny, ale limit raportow zostal wykorzystany.",
+  "requestAccess": "Popros o dostep",
+  "verifyAccess": "Zweryfikuj dostep",
+  "betaRetryRequired": "Zweryfikuj aktywny dostep beta zanim ponowisz raport.",
+  "reportNotFound": "Raport nie zostal znaleziony.",
+  "unknownFailure": "Nie udalo sie wykonac operacji.",
+  "markdownCopyFailed": "Nie udalo sie skopiowac Markdown.",
+  "diagnosticsCopyFailed": "Nie udalo sie skopiowac diagnostyki.",
+  "feedbackFailed": "Nie udalo sie wyslac feedbacku."
+}

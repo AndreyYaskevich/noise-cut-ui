@@ -1,0 +1,68 @@
+{
+  "id": "TASK-020-migrate-test-suite-off-literal-strings",
+  "title": "Migrate test suite off literal translated strings",
+  "type": "implementation",
+  "status": "proposed",
+  "topology": "single-repo",
+  "objective": "Update test assertions that hardcode literal translated strings to use data-testid/role-based queries where translation content isn't the point of the test, keeping literal assertions only where verifying translation is the test's purpose.",
+  "scope": {
+    "include": [
+      "Audit App.test.tsx, noiseCutApi.test.ts, reportMarkdown.test.ts for literal-string assertions.",
+      "Switch non-translation-focused assertions to data-testid/role-based queries.",
+      "Consolidate translation-content assertions near the relevant feature tests."
+    ],
+    "exclude": [
+      "Reducing test coverage.",
+      "Component behavior changes to make tests pass.",
+      "New feature work."
+    ]
+  },
+  "context": {
+    "must_read": [
+      ".ai/AI_CONTRACT.md",
+      ".ai/STATE.md",
+      ".ai/slices/SLICE-019-migrate-test-suite-off-literal-strings.md",
+      "src/App.test.tsx",
+      "src/api/noiseCutApi.test.ts",
+      "src/reportMarkdown.test.ts"
+    ],
+    "optional_read": []
+  },
+  "allowed_files": [
+    "src/App.tsx",
+    "src/App.test.tsx",
+    "src/api/noiseCutApi.test.ts",
+    "src/reportMarkdown.test.ts",
+    ".ai/slices/SLICE-019-migrate-test-suite-off-literal-strings.md",
+    ".ai/tasks/TASK-020-migrate-test-suite-off-literal-strings.json",
+    ".ai/verification/verification-019-migrate-test-suite-off-literal-strings.md",
+    ".ai/STATE.md",
+    ".ai/state/STATE.md",
+    ".ai/state/snapshot.json",
+    ".ai/state/events.jsonl"
+  ],
+  "forbidden_files": [
+    "../noise-cut-api/**",
+    "../noise-cut-extension/**",
+    "C:\\Dev\\NoiseCut\\noise-cut-api\\**",
+    "C:\\Dev\\NoiseCut\\noise-cut-extension\\**",
+    ".env*"
+  ],
+  "validation": {
+    "commands": [
+      "npm test -- --run",
+      "npm run build"
+    ]
+  },
+  "budget": {
+    "max_files_to_read": 8,
+    "max_files_to_edit": 5,
+    "max_context_tokens": 16000
+  },
+  "done": [
+    "Non-translation-focused tests use data-testid/role-based queries.",
+    "Translation-content tests keep literal assertions, consolidated appropriately.",
+    "Full test suite passes at the same or better coverage.",
+    "AI delivery state is updated, and Phase 003 slice status marked Completed."
+  ]
+}

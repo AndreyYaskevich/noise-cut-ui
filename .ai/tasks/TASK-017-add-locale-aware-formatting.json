@@ -1,0 +1,63 @@
+{
+  "id": "TASK-017-add-locale-aware-formatting",
+  "title": "Add locale-aware date/number/currency formatting",
+  "type": "implementation",
+  "status": "proposed",
+  "topology": "single-repo",
+  "objective": "Add src/i18n/format.ts wrapping Intl.DateTimeFormat/Intl.NumberFormat and replace the ad hoc toLocaleString call and manual USD cost string with it.",
+  "scope": {
+    "include": [
+      "Add src/i18n/format.ts with formatDate/formatNumber/formatCurrency.",
+      "Replace formatTimestamp's inline toLocaleString call.",
+      "Replace the manual $ cost string with Intl.NumberFormat USD currency style."
+    ],
+    "exclude": [
+      "Any change to customer-facing PLN pricing copy.",
+      "Language switcher changes."
+    ]
+  },
+  "context": {
+    "must_read": [
+      ".ai/AI_CONTRACT.md",
+      ".ai/STATE.md",
+      ".ai/slices/SLICE-016-add-locale-aware-formatting.md",
+      "src/App.tsx"
+    ],
+    "optional_read": []
+  },
+  "allowed_files": [
+    "src/i18n/format.ts",
+    "src/i18n/format.test.ts",
+    "src/App.tsx",
+    ".ai/slices/SLICE-016-add-locale-aware-formatting.md",
+    ".ai/tasks/TASK-017-add-locale-aware-formatting.json",
+    ".ai/verification/verification-016-add-locale-aware-formatting.md",
+    ".ai/STATE.md",
+    ".ai/state/STATE.md",
+    ".ai/state/snapshot.json",
+    ".ai/state/events.jsonl"
+  ],
+  "forbidden_files": [
+    "../noise-cut-api/**",
+    "../noise-cut-extension/**",
+    "C:\\Dev\\NoiseCut\\noise-cut-api\\**",
+    "C:\\Dev\\NoiseCut\\noise-cut-extension\\**",
+    ".env*"
+  ],
+  "validation": {
+    "commands": [
+      "npm test -- --run"
+    ]
+  },
+  "budget": {
+    "max_files_to_read": 6,
+    "max_files_to_edit": 4,
+    "max_context_tokens": 8000
+  },
+  "done": [
+    "format.ts exists with tested formatDate/formatNumber/formatCurrency helpers.",
+    "formatTimestamp and diagnostics cost display use the new helpers.",
+    "No visible value change beyond consistent Intl grouping/decimal rules.",
+    "AI delivery state is updated."
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "betaEmailRequired": "Enter beta email.",
+  "betaCredentialsRequired": "Enter beta email and access code.",
+  "betaDisabled": "Beta gate is disabled in this environment. Reports can be generated without an access code.",
+  "betaAccessTitle": "Report access",
+  "betaCodePlaceholder": "Code sent after activation",
+  "betaAccessPrompt": "Enter email and access code. If you do not have a code, request beta access.",
+  "betaPendingDetail": "Account is waiting for payment or manual activation.",
+  "betaDisabledDetail": "Beta account is disabled.",
+  "betaNeedsActivation": "Beta access requires activation.",
+  "activeAccess": "Active access. Reports remaining: {{remaining}}.",
+  "limitUsed": "Access is active, but the report limit has been used.",
+  "requestAccess": "Request access",
+  "verifyAccess": "Verify access",
+  "betaRetryRequired": "Verify active beta access before retrying the report.",
+  "reportNotFound": "Report was not found.",
+  "unknownFailure": "The operation could not be completed.",
+  "markdownCopyFailed": "Could not copy Markdown.",
+  "diagnosticsCopyFailed": "Could not copy diagnostics.",
+  "feedbackFailed": "Could not send feedback."
+}

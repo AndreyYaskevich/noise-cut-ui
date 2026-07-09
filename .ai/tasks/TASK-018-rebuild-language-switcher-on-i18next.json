@@ -1,0 +1,73 @@
+{
+  "id": "TASK-018-rebuild-language-switcher-on-i18next",
+  "title": "Rebuild language switcher on i18next, remove shim",
+  "type": "implementation",
+  "status": "proposed",
+  "topology": "single-repo",
+  "objective": "Replace the module-level mutable activeUiLanguage variable with i18next language state, configure the language detector to match current localStorage/navigator.language detection order, keep the report-language selector distinct, and delete the src/i18n.ts shim.",
+  "scope": {
+    "include": [
+      "Replace activeUiLanguage with i18next language state (useTranslation/i18n.language).",
+      "Configure i18next-browser-languagedetector to match current detection order.",
+      "Keep the report-language selector as a distinct plain request-parameter control.",
+      "Delete src/i18n.ts and all remaining references."
+    ],
+    "exclude": [
+      "Report-language selector behavior or storage key changes.",
+      "New switcher UI beyond what exists.",
+      "Pluralization or test-suite migration work."
+    ]
+  },
+  "context": {
+    "must_read": [
+      ".ai/AI_CONTRACT.md",
+      ".ai/STATE.md",
+      ".ai/adr/ADR-003-adopt-react-i18next-for-ui-localization.md",
+      ".ai/slices/SLICE-017-rebuild-language-switcher-on-i18next.md",
+      "src/App.tsx",
+      "src/i18n.ts",
+      "src/i18nSetup.ts"
+    ],
+    "optional_read": [
+      "src/App.test.tsx"
+    ]
+  },
+  "allowed_files": [
+    "src/App.tsx",
+    "src/App.test.tsx",
+    "src/i18nSetup.ts",
+    "src/i18n.ts",
+    ".ai/slices/SLICE-017-rebuild-language-switcher-on-i18next.md",
+    ".ai/tasks/TASK-018-rebuild-language-switcher-on-i18next.json",
+    ".ai/verification/verification-017-rebuild-language-switcher-on-i18next.md",
+    ".ai/STATE.md",
+    ".ai/state/STATE.md",
+    ".ai/state/snapshot.json",
+    ".ai/state/events.jsonl"
+  ],
+  "forbidden_files": [
+    "../noise-cut-api/**",
+    "../noise-cut-extension/**",
+    "C:\\Dev\\NoiseCut\\noise-cut-api\\**",
+    "C:\\Dev\\NoiseCut\\noise-cut-extension\\**",
+    ".env*"
+  ],
+  "validation": {
+    "commands": [
+      "npm run build",
+      "npm test -- --run"
+    ]
+  },
+  "budget": {
+    "max_files_to_read": 8,
+    "max_files_to_edit": 4,
+    "max_context_tokens": 12000
+  },
+  "done": [
+    "Switcher no longer depends on the module-level mutable variable.",
+    "localStorage persistence and no-full-reload behavior preserved.",
+    "Report-language selector unaffected by UI-language changes.",
+    "src/i18n.ts is deleted with no remaining references.",
+    "AI delivery state is updated."
+  ]
+}

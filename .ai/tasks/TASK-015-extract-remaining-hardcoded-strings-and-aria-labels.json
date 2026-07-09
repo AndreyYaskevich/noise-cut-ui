@@ -1,0 +1,75 @@
+{
+  "id": "TASK-015-extract-remaining-hardcoded-strings-and-aria-labels",
+  "title": "Extract remaining hardcoded strings and aria-labels",
+  "type": "implementation",
+  "status": "proposed",
+  "topology": "single-repo",
+  "objective": "Move every remaining hardcoded string and aria-label in src/App.tsx into the translation namespaces so they respond to the active UI language, including fixing the Polish-only fallback heading.",
+  "scope": {
+    "include": [
+      "Audit every view in App.tsx for strings/aria-labels not sourced from translation namespaces.",
+      "Move each into the appropriate namespace and replace the literal with a translation lookup.",
+      "Fix the Polish-only fallback heading to respond to UI language."
+    ],
+    "exclude": [
+      "Layout or component structure changes beyond string replacement.",
+      "API error translation layer, formatting, switcher, pluralization, or test migration work."
+    ]
+  },
+  "context": {
+    "must_read": [
+      ".ai/AI_CONTRACT.md",
+      ".ai/STATE.md",
+      ".ai/slices/SLICE-014-extract-remaining-hardcoded-strings-and-aria-labels.md",
+      "src/App.tsx"
+    ],
+    "optional_read": [
+      "src/App.test.tsx"
+    ]
+  },
+  "allowed_files": [
+    "src/App.tsx",
+    "src/App.test.tsx",
+    "src/locales/en/common.json",
+    "src/locales/en/forms.json",
+    "src/locales/en/report.json",
+    "src/locales/en/diagnostics.json",
+    "src/locales/pl/common.json",
+    "src/locales/pl/forms.json",
+    "src/locales/pl/report.json",
+    "src/locales/pl/diagnostics.json",
+    ".ai/slices/SLICE-014-extract-remaining-hardcoded-strings-and-aria-labels.md",
+    ".ai/tasks/TASK-015-extract-remaining-hardcoded-strings-and-aria-labels.json",
+    ".ai/verification/verification-014-extract-remaining-hardcoded-strings-and-aria-labels.md",
+    ".ai/STATE.md",
+    ".ai/state/STATE.md",
+    ".ai/state/snapshot.json",
+    ".ai/state/events.jsonl"
+  ],
+  "forbidden_files": [
+    "../noise-cut-api/**",
+    "../noise-cut-extension/**",
+    "C:\\Dev\\NoiseCut\\noise-cut-api\\**",
+    "C:\\Dev\\NoiseCut\\noise-cut-extension\\**",
+    ".env*",
+    "src/reportMarkdown.ts",
+    "src/api/noiseCutApi.ts"
+  ],
+  "validation": {
+    "commands": [
+      "npm run build",
+      "npm test -- --run"
+    ]
+  },
+  "budget": {
+    "max_files_to_read": 10,
+    "max_files_to_edit": 10,
+    "max_context_tokens": 16000
+  },
+  "done": [
+    "No hardcoded string literals remain in App.tsx JSX outside translation lookups.",
+    "All aria-labels respond to the active UI language.",
+    "App.test.tsx asserts key screens render translated text/aria-labels in both en and pl.",
+    "AI delivery state is updated."
+  ]
+}

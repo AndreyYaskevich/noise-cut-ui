@@ -5,10 +5,10 @@
     "type": "react-typescript-web-app"
   },
   "current": {
-    "objective": "Complete the Reddit-first URL-only report flow while keeping YouTube on pasted evidence only for v0.",
-    "phase": "Phase 002: Product Signal Report API Contract",
-    "slice": "Slice 011: Plan URL-Only Report Generation",
-    "task_id": "url-only-mode-ux-fallback-and-guidance"
+    "objective": "Formalize the existing hand-rolled en/pl localization without breaking the shipped Allegro MVP 0.1 or noise-cut-extension.",
+    "phase": "Phase 003: Localization Hardening",
+    "slice": "Slice 013: Consolidate Duplicated Translation Dictionaries",
+    "task_id": "consolidate-duplicated-translation-dictionaries"
   },
   "completed_tasks": [
     "TASK-001-initialize-noisecut-ui-ai-context",
@@ -21,34 +21,29 @@
     "TASK-009-consume-product-signal-report-projection",
     "TASK-010-add-markdown-export-for-structured-reports",
     "TASK-011-add-report-feedback-submission",
-    "url-only-submission-mode-with-api-capability-metadata"
+    "allegro-mvp-0.1-direct-commit-bf6ac02 (retroactive, outside AI slice/task workflow)",
+    "reconcile-ai-context-with-shipped-allegro-mvp",
+    "add-i18next-library-and-mechanical-string-port (Slice 012)"
   ],
-  "last_verified_commit": "unknown",
+  "superseded_tasks": [
+    "TASK-012-plan-url-only-report-generation"
+  ],
+  "last_verified_commit": "bf6ac02",
   "decisions": [
     "noise-cut-ui/.ai is canonical for committed work in this repository.",
     "The existing NoiseCut API remains the source of truth for report generation and public contracts.",
     "The existing extension remains supported and should evolve into a capture/handoff tool.",
-    "Founder lens is the v0 priority for the Product Signal Report UI contract.",
     "Use Vite + React + TypeScript with npm for the NoiseCut Web App scaffold.",
-    "The initial UI integration checks existing API readiness and metadata before report-generation work.",
-    "The UI submits Founder-lens report requests through existing POST /api/analysis-jobs and polls GET /api/analysis-jobs/{jobId}.",
-    "The full Product Signal Report sections should come from an additive API-owned report projection, not a UI-only transformation of verdict results.",
-    "The UI prefers the additive report projection and falls back to the existing verdict-style result field.",
-    "Markdown export is assembled in the UI from structured job.report data and is available only for report-backed jobs.",
-    "Report feedback goes through the existing API feedback endpoint and avoids sending raw discussion excerpts by default.",
-    "The UI supports both pasted-evidence and URL-only submission modes.",
-    "URL-only mode eligibility is driven by additive API metadata capabilities rather than hardcoded source rules.",
-    "v0 keeps YouTube in scope only through pasted evidence, and any YouTube URL-only expansion requires an explicit follow-up task."
+    "The actual v0.1 UI is the Allegro Product Risk & Opportunity Report workspace, not the earlier Reddit/YouTube Founder-lens narrative.",
+    "Adopt react-i18next/i18next to replace the hand-rolled src/i18n.ts, primarily for correct Polish pluralization and to consolidate four duplicated string dictionaries.",
+    "The UI stops preferring server-supplied error.message; it translates client-side from error.code (+ future params)."
   ],
   "constraints": [
     "Runtime app scaffold exists with Vite, React, TypeScript, npm, Vitest, and React Testing Library.",
-    "Pasted-evidence mode still blocks report submission when no evidence items are supplied.",
-    "URL-only mode currently depends on API metadata advertising support and is enabled for Reddit only.",
-    "The UI must preserve YouTube pasted-evidence submission and must not advertise YouTube URL-only unless the API metadata contract explicitly changes.",
     "Do not modify sibling API or extension repos from this repo unless a later task explicitly coordinates cross-repo work.",
     "Do not invent route names, billing, auth, or API behavior that is not backed by checked-in files.",
-    "Founder lens is the v0 priority.",
-    "Raw page/comment content must not be logged or stored by default."
+    "Raw page/comment/evidence content must not be logged or stored by default.",
+    "Slice 015 is blocked on noise-cut-api Slice 010 shipping the additive Params field first."
   ],
   "forbidden_changes": [
     "Do not change public contracts unless the active slice explicitly requires it.",
@@ -57,41 +52,50 @@
   ],
   "validation_commands": [
     "powershell -NoProfile -ExecutionPolicy Bypass -File C:\\Dev\\ai-delivery-kit\\scripts\\validate-ai-docs.ps1 . -Topology SingleRepo",
-    "powershell -NoProfile -ExecutionPolicy Bypass -File C:\\Dev\\ai-delivery-kit\\scripts\\check-ai-guardrails.ps1 . -TaskPath .\\.ai\\tasks\\TASK-012-plan-url-only-report-generation.json -Strict"
+    "npm run build",
+    "npm test -- --run"
   ],
   "open_questions": [
-    "What safe error contract should the API return for extraction-failed Reddit URL-only requests?",
-    "Will the v0 app need React Router, or can it remain a single-view tool?",
-    "What evidence threshold should justify a future YouTube URL-only expansion task?"
+    "Should i18next/react-i18next be pinned to explicit versions given package.json currently pins everything to latest?",
+    "Should the frontend read SUPPORTED_LANGUAGES from GET /api/meta at boot instead of hardcoding its own copy?"
   ],
   "known_risks": [
-    "API contract work may overreach if it is not kept additive and tied to existing backend patterns.",
-    "Extension compatibility could be broken later if handoff work is not regression-checked explicitly.",
-    "The UI contract may need a wrapper if the API returns report data inside a job result envelope.",
-    "The report contract can drift from backend DTOs if implemented before an API coordination task.",
-    "The UI now depends on CORS and availability of the existing API for live readiness display.",
-    "The current feedback UI is intentionally narrow and may need richer affordances later.",
-    "Markdown export remains unavailable for verdict-only fallback jobs.",
-    "UI/API capability metadata can drift if later API changes are not reflected in the UI contract tests.",
-    "YouTube URL-only could accidentally expand scope unless it is revisited only after clear demand, a stable extraction source, and acceptance in API and extension repo instructions."
+    "The four existing duplicated string dictionaries have already drifted from each other.",
+    "Existing tests assert on exact literal translated strings; migration requires nontrivial rework.",
+    "Slice 015 is blocked on a cross-repo dependency (noise-cut-api Slice 010)."
   ],
   "last_task_summary": {
-    "date": "2026-07-07",
-    "actor": "Codex",
-    "task_id": "reddit-first-url-only-completion-alignment",
-    "summary": "Added persistent submission-mode guidance and automatically switched back to pasted evidence when URL-only no longer matched the current source capability.",
+    "date": "2026-07-09",
+    "actor": "Claude",
+    "task_id": "add-i18next-library-and-mechanical-string-port",
+    "summary": "Added i18next/react-i18next/i18next-browser-languagedetector (pinned versions), wired I18nextProvider into main.tsx, mechanically ported all ~140 keys from src/i18n.ts into 5 namespace JSON files (common/forms/errors/report/diagnostics) under src/locales/{en,pl}/. src/i18n.ts untouched; zero visible behavior change.",
     "files_changed": [
-      "src/App.tsx",
-      "src/App.test.tsx",
-      ".ai/STATE.md",
+      "package.json",
+      "package-lock.json",
+      "src/locales/en/common.json",
+      "src/locales/en/forms.json",
+      "src/locales/en/errors.json",
+      "src/locales/en/report.json",
+      "src/locales/en/diagnostics.json",
+      "src/locales/pl/common.json",
+      "src/locales/pl/forms.json",
+      "src/locales/pl/errors.json",
+      "src/locales/pl/report.json",
+      "src/locales/pl/diagnostics.json",
+      "src/i18nSetup.ts",
+      "src/i18nSetup.test.ts",
+      "src/main.tsx",
+      ".ai/slices/SLICE-012-add-i18next-library-and-mechanical-string-port.md",
+      ".ai/tasks/TASK-013-add-i18next-library-and-mechanical-string-port.json",
+      ".ai/verification/verification-012-add-i18next-library-and-mechanical-string-port.md",
       ".ai/state/STATE.md",
       ".ai/state/snapshot.json",
       ".ai/state/events.jsonl"
     ],
-    "validation": "npm run build and npm test -- --run.",
+    "validation": "npm run build passed; npm test -- --run passed 39/39.",
     "remaining_risks": [
-      "The UI depends on the API metadata capability contract remaining accurate.",
-      "Future platform expansion still needs an explicit follow-up task."
+      "Consolidating the four duplicated string dictionaries (Slice 013) risks wording drift.",
+      "Slice 015 remains cross-repo dependent on noise-cut-api Slice 010's Params field."
     ]
   }
 }
